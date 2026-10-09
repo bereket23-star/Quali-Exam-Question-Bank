@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f4c5c">
+<title>Quali Exam Bank</title>
+<style>
+:root{--bg:#f3eee4;--fg:#16303a;--card:#fffcf6;--bd:#e2d9c8;--accent:#0f4c5c;--on:#fff;--muted:#5d6b6e;--ok:#1b7f4b;--bad:#b3261e;--okbg:#e2f4ea;--badbg:#fbe5e3;--warm:#b8501f;--rule:rgba(15,76,92,.10);--shadow:0 1px 2px rgba(22,48,58,.08),0 6px 16px rgba(22,48,58,.06);--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1619;--fg:#e8efe9;--card:#16242a;--bd:#27393f;--accent:#6bbfd0;--on:#06222a;--muted:#97a9ab;--ok:#6fd09a;--bad:#ff8a80;--okbg:#17352a;--badbg:#3a1f1d;--warm:#f0a070;--rule:rgba(107,191,208,.10);--shadow:0 1px 2px rgba(0,0,0,.4),0 6px 16px rgba(0,0,0,.25)}}
+:root[data-theme="dark"]{--bg:#0d1619;--fg:#e8efe9;--card:#16242a;--bd:#27393f;--accent:#6bbfd0;--on:#06222a;--muted:#97a9ab;--ok:#6fd09a;--bad:#ff8a80;--okbg:#17352a;--badbg:#3a1f1d;--warm:#f0a070;--rule:rgba(107,191,208,.10);--shadow:0 1px 2px rgba(0,0,0,.4),0 6px 16px rgba(0,0,0,.25)}
+html,body{height:100%}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,Roboto,"Segoe UI",sans-serif;display:flex;flex-direction:column;overflow:hidden}
+#bar{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--card);border-bottom:1px solid var(--bd);min-height:48px;flex:none}
+#bar .title{flex:1;font-weight:700;font-size:17px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib{background:none;border:1px solid var(--bd);color:var(--fg);border-radius:10px;font:600 15px inherit;padding:8px 12px;cursor:pointer}
+.ib.p{background:var(--accent);color:var(--on);border-color:var(--accent)}
+.screen{flex:1;overflow:auto;padding:0 16px 28px;display:none}
+.wrap{max-width:900px;margin:0 auto}
+header{padding:20px 4px 8px}
+h1{margin:0;font-size:26px;color:var(--accent)}
+p.sub{margin:4px 0 0;color:var(--muted);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.chip{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:6px 12px;font-size:13px;font-weight:600}
+.banner{background:var(--accent);color:var(--on);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:14px;display:none;cursor:pointer}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:10px 0}
+.card{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;color:inherit;font:inherit;text-align:left;cursor:pointer;width:100%}
+.card:active{transform:scale(.98)}
+.ic{font-size:28px;width:50px;height:50px;border-radius:12px;background:var(--bg);display:grid;place-items:center;flex:none}
+.cb{flex:1;min-width:0}
+.t{font-weight:700;font-size:17px}.d{font-size:12.5px;color:var(--muted);margin-top:2px}
+.pbar{height:6px;background:var(--bg);border-radius:4px;margin-top:8px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--accent)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:6px 0 10px}
+.big{background:var(--accent);color:var(--on);border:0;border-radius:14px;padding:16px 10px;font:700 15px inherit;cursor:pointer}
+.big.alt{background:var(--card);color:var(--accent);border:1px solid var(--bd)}
+.cont{width:100%;margin:6px 0;display:none}
+#frame{display:none;flex:1;width:100%;border:0;background:#fff}
+#scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20}
+#sheet{display:none;position:fixed;left:0;right:0;bottom:0;max-height:86%;overflow:auto;background:var(--card);color:var(--fg);border-radius:18px 18px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));z-index:21;box-shadow:0 -4px 20px rgba(0,0,0,.3)}
+#sheet h2{margin:2px 0 12px;font-size:19px;color:var(--accent);display:flex;justify-content:space-between;align-items:center}
+#sheet h3{margin:18px 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0}
+.seg{display:flex;border:1px solid var(--bd);border-radius:10px;overflow:hidden;flex-wrap:nowrap}
+.seg button{background:none;border:0;border-right:1px solid var(--bd);color:var(--fg);padding:8px 11px;font:600 13px inherit;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--accent);color:var(--on)}
+select,input[type=date],input[type=time],input[type=number],input[type=search]{background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:10px;padding:9px;font:inherit}
+.sw{position:relative;width:46px;height:26px;flex:none}
+.sw input{opacity:0;width:100%;height:100%;margin:0;position:absolute;inset:0;z-index:2;cursor:pointer}
+.sw i{position:absolute;inset:0;background:var(--bd);border-radius:13px;transition:.15s}
+.sw i:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.15s}
+.sw input:checked+i{background:var(--accent)}
+.sw input:checked+i:after{left:23px}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tools button{background:var(--bg);border:1px solid var(--bd);color:var(--fg);border-radius:12px;padding:12px 8px;font:600 14px inherit;cursor:pointer}
+.tools button[disabled]{opacity:.35}
+.note{font-size:12px;color:var(--muted);margin:6px 0 0}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:#222;color:#fff;padding:10px 16px;border-radius:20px;font-size:14px;z-index:30;display:none;max-width:88%;text-align:center}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin:12px 0}
+.panel h3{margin:0 0 8px;font-size:16px;color:var(--accent)}
+.lbl{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:15px}
+.lbl input[type=checkbox]{width:20px;height:20px}
+.qh{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);margin-bottom:8px}
+.qt{white-space:pre-wrap;font-size:16px;line-height:1.45;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:7px 0;font:inherit;font-size:15px;line-height:1.35;cursor:pointer;white-space:pre-wrap}
+.opt.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.opt.right{background:var(--okbg);border-color:var(--ok)}
+.opt.wrong{background:var(--badbg);border-color:var(--bad)}
+.expl{background:var(--bg);border-radius:12px;padding:12px;margin:10px 0;font-size:14px;line-height:1.5;white-space:pre-wrap}
+.expl b{color:var(--accent)}
+.nav{display:flex;gap:8px;margin:12px 0}
+.nav button{flex:1}
+.res{padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.big2{font-size:34px;font-weight:800;color:var(--accent)}
+.hit{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:8px 0;cursor:pointer}
+.hit .m{font-size:12px;color:var(--muted);margin-bottom:4px}
+.hit .q{font-size:14.5px;line-height:1.4;white-space:pre-wrap}
+.warn{color:var(--bad);font-weight:700}
+.conf{display:flex;align-items:center;gap:6px;margin:10px 0 2px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.conf button{background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:16px;padding:6px 12px;font:600 13px inherit;cursor:pointer}
+.conf button.on{background:var(--accent);color:var(--on);border-color:var(--accent)}
+.trow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.trow .tn{flex:1;min-width:0}.trow .tm{font-size:12px;color:var(--muted)}
+.mini{background:var(--accent);color:var(--on);border:0;border-radius:10px;padding:7px 10px;font:700 13px inherit;cursor:pointer}
+.goal{height:10px;background:var(--bg);border-radius:6px;overflow:hidden;margin:8px 0}.goal i{display:block;height:100%;background:var(--ok)}
+svg.ch{width:100%;height:auto;display:block}
+
+h1,#sheet h2,.panel h3,.big2,.qt{font-family:var(--serif)}
+header{padding:26px 4px 6px}
+h1{font-size:32px;letter-spacing:-.01em;line-height:1.1}
+p.sub{font-size:15px;margin-top:6px}
+#bar{box-shadow:0 1px 0 var(--bd)}
+#bar .title{font-family:var(--serif);font-size:18px}
+.card{border-left:5px solid var(--c,var(--accent));box-shadow:var(--shadow);border-radius:16px;padding:14px 14px 14px 12px}
+.card .ic{background:color-mix(in srgb,var(--c,var(--accent)) 14%,var(--card))}
+.card .t{font-family:var(--serif);font-size:18px}
+.panel{box-shadow:var(--shadow);border-radius:16px}
+.big{box-shadow:0 2px 0 rgba(0,0,0,.14);border-radius:14px;transition:transform .08s}
+.big:active,.mini:active{transform:translateY(1px)}
+.big.alt{box-shadow:var(--shadow)}
+.ring{flex:none;width:46px;height:46px}
+.ring text{font:700 11px -apple-system,Roboto,sans-serif;fill:var(--fg)}
+.quote{position:relative;background-color:var(--card);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 27px,var(--rule) 27px,var(--rule) 28px);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--shadow);padding:14px 16px 12px 40px;margin:14px 0;cursor:pointer;line-height:28px}
+.quote:before{content:"";position:absolute;left:28px;top:0;bottom:0;width:1px;background:var(--warm);opacity:.5}
+.quote:after{content:"“";position:absolute;left:6px;top:2px;font:700 38px var(--serif);color:var(--warm);opacity:.85;line-height:1.2}
+.quote p{margin:0;font:italic 17px/28px var(--serif);color:var(--fg)}
+.quote small{display:block;font-size:12px;color:var(--muted);line-height:20px;margin-top:2px}
+.chip{background:var(--card);box-shadow:var(--shadow);border-color:transparent}
+.sig{text-align:center;margin:26px 0 8px;font:italic 14px var(--serif);color:var(--muted)}
+.sig a{color:var(--accent);font-weight:700;text-decoration:none;border-bottom:1px solid var(--bd)}
+.sig .mark{display:block;font-size:18px;color:var(--warm);margin-bottom:4px}
+.resq{margin:12px 0}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.anim .card,.anim .quote{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*60ms)}
+@media(prefers-reduced-motion:reduce){.anim .card,.anim .quote{animation:none}}
+.big.warm{background:var(--warm);color:#fff}
+.tabs{margin:10px 0}.tabs .seg{width:100%}.tabs .seg button{flex:1}
+.joke{font:19px/1.45 var(--serif);margin:6px 0 14px}.joke .pu{color:var(--warm);font-style:italic;margin-top:10px}
+.mcanvas{width:100%;height:auto;border-radius:14px;display:block;box-shadow:var(--shadow)}
+.breath{display:grid;place-items:center;height:230px}
+.orb{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--accent) 40%,#fff),var(--accent));box-shadow:0 0 40px color-mix(in srgb,var(--accent) 45%,transparent);display:grid;place-items:center;color:var(--on);font:700 14px var(--serif);transition:transform 4s ease-in-out}
+.bkclock{font:700 26px var(--serif);color:var(--accent)}
+@media(prefers-reduced-motion:reduce){.orb{transition:none}}
+
+:root[data-palette="ocean"]{--accent:#1f4e8c;--warm:#c26a1b;--rule:rgba(31,78,140,.10)}
+:root[data-palette="rose"]{--accent:#8f2d56;--warm:#b8501f;--rule:rgba(143,45,86,.10)}
+:root[data-palette="sepia"]{--accent:#6b4a2b;--warm:#a8431a;--rule:rgba(107,74,43,.11)}
+:root[data-palette="graphite"]{--accent:#33414a;--warm:#b8501f;--rule:rgba(51,65,74,.10)}
+:root[data-theme="dark"][data-palette="ocean"]{--accent:#8ab6f2;--rule:rgba(138,182,242,.10)}
+:root[data-theme="dark"][data-palette="rose"]{--accent:#e58aa9;--rule:rgba(229,138,169,.10)}
+:root[data-theme="dark"][data-palette="sepia"]{--accent:#d2a679;--rule:rgba(210,166,121,.10)}
+:root[data-theme="dark"][data-palette="graphite"]{--accent:#a9b8c0;--rule:rgba(169,184,192,.10)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"])[data-palette="ocean"]{--accent:#8ab6f2;--rule:rgba(138,182,242,.10)}:root:not([data-theme="light"])[data-palette="rose"]{--accent:#e58aa9;--rule:rgba(229,138,169,.10)}:root:not([data-theme="light"])[data-palette="sepia"]{--accent:#d2a679;--rule:rgba(210,166,121,.10)}:root:not([data-theme="light"])[data-palette="graphite"]{--accent:#a9b8c0;--rule:rgba(169,184,192,.10)}}
+#home{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 9%,transparent),transparent 240px)}
+.screen.enter{animation:rise .32s ease both}
+#bk-tabs{display:grid;grid-template-columns:repeat(3,1fr)}
+#bk-tabs button{border-bottom:1px solid var(--bd)}
+#bk-tabs button:nth-child(3n){border-right:0}
+.scorering{position:relative;width:150px;height:150px;margin:0 auto}
+.scorering .sc{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.scorering .big2{font-size:26px}
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}
+.mcard{aspect-ratio:1;border-radius:14px;border:1px solid var(--bd);background:var(--accent);color:var(--on);font-size:30px;display:grid;place-items:center;cursor:pointer;transition:transform .25s,background .2s}
+.mcard.up{background:var(--card);transform:rotateY(0)}
+.mcard.done{background:var(--okbg);border-color:var(--ok)}
+.snds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0}
+.snds button{background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:12px;padding:10px 4px;font:600 13px inherit;cursor:pointer}
+.snds button.on{background:var(--accent);color:var(--on);border-color:var(--accent)}
+.stretch{padding:10px 0;border-bottom:1px solid var(--bd)}.stretch b{font-family:var(--serif);font-size:16px}
+.stretch p{margin:4px 0 8px;font-size:14px;color:var(--muted);line-height:1.45}
+.fall{position:fixed;top:-8%;font-size:26px;z-index:40;pointer-events:none;animation:fall 2.3s ease-in forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(360deg);opacity:.9}}
+@media(prefers-reduced-motion:reduce){.screen.enter{animation:none}.fall{display:none}}
+
+#tabs{display:flex;flex:none;background:var(--card);border-top:1px solid var(--bd);box-shadow:0 -2px 10px rgba(0,0,0,.04)}
+#tabs button{flex:1;background:none;border:0;padding:7px 0 6px;color:var(--muted);font:600 11px -apple-system,Roboto,sans-serif;display:grid;gap:1px;justify-items:center;cursor:pointer}
+#tabs button i{font-style:normal;font-size:21px;line-height:1.1}
+#tabs button.on{color:var(--accent)}
+.hub{display:grid;gap:10px;margin:12px 0}
+.hubi{display:flex;gap:14px;align-items:center;text-align:left;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:16px;padding:14px;box-shadow:var(--shadow);font:inherit;cursor:pointer;width:100%}
+.hubi i{font-style:normal;font-size:26px;width:46px;height:46px;border-radius:12px;background:var(--bg);display:grid;place-items:center;flex:none}
+.hubi b{display:block;font:700 17px var(--serif)}.hubi span{display:block;font-size:13px;color:var(--muted);margin-top:2px;line-height:1.35}
+.hubi:active{transform:scale(.99)}
+#welcome{display:none;position:fixed;inset:0;background:var(--bg);z-index:50;overflow:auto;padding:calc(20px + env(safe-area-inset-top,0px)) 16px 30px}
+#welcome h1{margin-top:8px}
+.rgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:10px 0}
+.rb{aspect-ratio:1;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--fg);font:600 14px inherit;cursor:pointer;position:relative}
+.rb.ans{background:var(--accent);color:var(--on);border-color:var(--accent)}
+.rb.flg:after{content:"⚑";position:absolute;top:-6px;right:-3px;font-size:13px;color:var(--warm)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.simclock{font:700 18px var(--serif);color:var(--accent)}
+.simclock.low{color:var(--bad)}
+textarea,input[type=text]{width:100%;background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:10px;padding:10px;font:inherit;font-size:15px;margin:4px 0}
+textarea{resize:vertical}
+.remark{display:flex;gap:12px;align-items:center}.remark .em{font-size:34px;flex:none}.remark p{margin:0;font:italic 16px/1.45 var(--serif)}
+.cal{display:grid;grid-template-columns:78px 1fr 46px;gap:8px;align-items:center;margin:8px 0;font-size:14px}
+.calbar{height:12px;background:var(--bg);border-radius:7px;overflow:hidden}.calbar i{display:block;height:100%;background:var(--accent)}
+.mqrow{display:flex;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--bd);font-size:14px}.mqrow .tn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+:root{--qb1:#8f3b12;--qb2:#c9652d;--qfg:#fff;--qsub:rgba(255,255,255,.84);--qmark:rgba(255,255,255,.26);--qglow:rgba(143,59,18,.38)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--qb1:#e8a56a;--qb2:#f3cd8a;--qfg:#2a1608;--qsub:rgba(42,22,8,.78);--qmark:rgba(42,22,8,.2);--qglow:rgba(240,168,117,.3)}}
+:root[data-theme="dark"]{--qb1:#e8a56a;--qb2:#f3cd8a;--qfg:#2a1608;--qsub:rgba(42,22,8,.78);--qmark:rgba(42,22,8,.2);--qglow:rgba(240,168,117,.3)}
+.quote{background:linear-gradient(135deg,var(--qb1),var(--qb2));border:0;color:var(--qfg);box-shadow:0 12px 28px -10px var(--qglow),0 2px 5px rgba(0,0,0,.1);line-height:1.4;padding:18px 18px 14px 64px;overflow:hidden}
+.quote:before{display:none}
+.quote:after{content:"“";color:var(--qmark);opacity:1;font:700 74px/1 var(--serif);left:12px;top:6px}
+.quote p{color:var(--qfg);font:italic 18px/1.5 var(--serif);text-shadow:none}
+.quote small{color:var(--qsub);line-height:1.4;margin-top:10px;font-size:12.5px}
+.quote small b{color:var(--qfg)}
+</style></head><body>
+<div id="bar"><button class="ib" id="back" style="display:none">←</button><div class="title" id="title">Quali Exam Bank</div><button class="ib" id="gear">⚙ Settings</button></div>
+
+<div class="screen" id="home" style="display:block"><div class="wrap">
+<header><h1>Quali Exam Bank</h1><p class="sub" id="hero-sub">Your whole qualifying exam, one subject at a time.</p></header>
+<div class="banner" id="upd"></div>
+<div class="chips" id="chips"></div>
+<div class="quote" id="quote" title="Tap for another"></div>
+<button class="big cont" id="cont"></button>
+<div class="grid" id="grid"></div>
+<div id="plan-home"></div>
+<div class="sig"><span class="mark">✚</span>Prepared by <a href="https://t.me/Bekilife101" target="_blank" rel="noopener">Bekilife101</a><br><small>t.me/Bekilife101</small></div>
+</div></div>
+
+<div class="screen" id="search"><div class="wrap">
+<div class="panel"><h3>Search all banks</h3>
+<input type="search" id="q" placeholder="Type a word or phrase…" style="width:100%">
+<div style="margin-top:8px"><label class="lbl"><input type="checkbox" id="q-unc"> Only questions whose answer key is uncertain ⚠</label></div>
+<div class="note" id="q-info">Loading questions…</div></div>
+<div id="q-res"></div>
+</div></div>
+
+<div class="screen" id="mixed"><div class="wrap" id="mx"></div></div>
+<div class="screen" id="insights"><div class="wrap" id="ins"></div></div>
+<div class="screen" id="keyrev"><div class="wrap" id="kr"></div></div>
+<div class="screen" id="breakr"><div class="wrap" id="brk"></div></div>
+<div class="screen" id="flash"><div class="wrap" id="fc"></div></div>
+<div class="screen" id="myq"><div class="wrap" id="myqs"></div></div>
+<div class="screen" id="study"><div class="wrap">
+<header><h1 style="font-size:28px">Study</h1><p class="sub">Choose how you want to practise.</p></header>
+<div class="hub">
+<button class="hubi" id="go-mixed"><i>🔀</i><div><b>Mixed study</b><span>Questions from several subjects, as practice or a timed set.</span></div></button>
+<button class="hubi" id="go-sim"><i>📝</i><div><b>Exam simulator</b><span>A realistic sitting with sections, section timers and a review screen.</span></div></button>
+<button class="hubi" id="go-drill"><i>🎯</i><div><b>Weak-topic drill</b><span>Practise the topics you miss most.</span></div></button>
+<button class="hubi" id="go-fc"><i>🗂</i><div><b>Flashcards</b><span>Missed, flagged, noted or due questions as quick cards.</span></div></button>
+<button class="hubi" id="go-flag"><i>⚑</i><div><b>Flagged questions</b><span>Practise the questions you flagged.</span></div></button>
+<button class="hubi" id="go-search"><i>🔍</i><div><b>Search all banks</b><span>Find any question across the five subjects.</span></div></button>
+<button class="hubi" id="go-myq"><i>✏️</i><div><b>My questions</b><span>Write your own questions and study them with everything else.</span></div></button>
+<button class="hubi" id="go-kr"><i>🔑</i><div><b>Review answer keys</b><span>Settle the questions whose key is uncertain.</span></div></button>
+</div></div></div>
+
+
+<iframe id="frame" title="Question bank"></iframe>
+<nav id="tabs"><button data-t="home" class="on"><i>🏠</i>Home</button><button data-t="study"><i>📚</i>Study</button><button data-t="insights"><i>📊</i>Insights</button><button data-t="breakr"><i>☕</i>Break</button></nav>
+<div id="welcome"><div class="wrap"><h1>Welcome</h1><p class="sub">Set up in twenty seconds. You can change everything later in Settings.</p>
+<div class="panel"><h3>When is your exam?</h3><input type="date" id="w-exam"><div class="note">This lets the app set a daily goal and bring questions back before the exam.</div></div>
+<div class="panel"><h3>Which subjects are you taking?</h3><label class="lbl"><input type="checkbox" class="w-s" value="surgery" checked> 🔪 Surgery</label><label class="lbl"><input type="checkbox" class="w-s" value="im" checked> 🩺 Internal Medicine</label><label class="lbl"><input type="checkbox" class="w-s" value="obgyn" checked> 🤰 OB &amp; Gyn</label><label class="lbl"><input type="checkbox" class="w-s" value="pediatrics" checked> 🧸 Pediatrics</label><label class="lbl"><input type="checkbox" class="w-s" value="publichealth" checked> 🌍 Public Health</label></div>
+<div class="panel"><h3>Daily reminder</h3><div class="row"><span>Remind me to study</span><label class="sw"><input type="checkbox" id="w-rem"><i></i></label></div><div class="row"><span>Time</span><input type="time" id="w-time" value="19:00"></div><div class="note">Reminders work in the installed app.</div></div>
+<div class="panel"><h3>Look</h3><div class="seg" id="w-theme"><button data-v="auto" class="on">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button></div></div>
+<button class="big" style="width:100%" id="w-go">Get started</button>
+<div style="text-align:center;margin-top:10px"><button class="ib" id="w-skip">Skip for now</button></div>
+</div></div>
+<div id="scrim"></div>
+<div id="sheet" role="dialog" aria-label="Settings and tools">
+<h2><span id="sheet-title">Settings</span><button class="ib" id="sheet-x">Done</button></h2>
+<h3>Appearance</h3>
+<div class="row"><span>Theme</span><div class="seg" id="s-theme"><button data-v="auto">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button></div></div>
+<div class="row"><span>Color</span><select id="s-palette"><option value="teal">Teal</option><option value="ocean">Ocean</option><option value="rose">Rose</option><option value="sepia">Sepia</option><option value="graphite">Graphite</option></select></div>
+<div class="row"><span>Layout</span><div class="seg" id="s-ui"><button data-v="auto">Auto</button><button data-v="phone">Phone</button><button data-v="pc">PC</button><button data-v="classic">Classic</button></div></div>
+<div class="row"><span>Text size</span><div class="seg" id="s-zoom"><button data-v="0.9">S</button><button data-v="1">M</button><button data-v="1.15">L</button><button data-v="1.3">XL</button></div></div>
+<h3>Answering</h3>
+<div class="row"><span>Lock answer until I choose</span><label class="sw"><input type="checkbox" id="s-lock"><i></i></label></div>
+<div class="row"><span>Show answer instantly when I choose</span><label class="sw"><input type="checkbox" id="s-instant"><i></i></label></div>
+<h3>Motivational quotes</h3>
+<div class="row"><span>Show</span><div class="seg" id="s-quotes"><button data-v="mixed">Mixed</button><button data-v="famous">Famous</button><button data-v="mine">Written for you</button></div></div>
+<h3>Exam countdown</h3>
+<div class="row"><span>Exam date</span><span><input type="date" id="s-exam"> <button class="ib" id="s-exam-x">Clear</button></span></div>
+<h3>My subjects</h3>
+<div id="s-subj"></div>
+<div class="row"><span class="note" style="margin:0">Only these show on Home, in the plan and as defaults.</span><button class="ib" id="s-setup">Run setup again</button></div>
+<h3>Daily reminder</h3>
+<div class="row"><span>Remind me to study</span><label class="sw"><input type="checkbox" id="s-remind"><i></i></label></div>
+<div class="row"><span>Time</span><input type="time" id="s-remind-at" value="19:00"></div>
+<p class="note" id="remind-note">Reminders work in the installed app and need notification permission.</p>
+<div id="tools-sec">
+<h3>Tools for <span id="tools-name">this bank</span></h3>
+<div class="tools">
+<button data-t="stats">📊 Stats</button>
+<button data-t="copy">📋 Copy all questions</button>
+<button data-t="export">⬆ Export notes</button>
+<button data-t="import">⬇ Import notes (file)</button>
+<button data-t="importclip">📎 Import notes (clipboard)</button>
+<button data-t="ai">🔑 AI explanations key</button>
+</div>
+</div>
+<h3>Your data</h3>
+<div class="tools">
+<button id="bk-all">💾 Back up all banks</button>
+<button id="bk-file">♻ Restore (file)</button>
+<button id="bk-clip" style="grid-column:1/3">♻ Restore (clipboard)</button>
+</div>
+<input type="file" id="bk-input" accept=".json,application/json" style="display:none">
+<p class="note">Backups include progress, notes, highlights, flags and settings. They do not include your AI key.</p>
+<h3>About</h3>
+<div class="row"><span id="ver">Quali Exam Bank</span><button class="ib" id="chk">Check for updates</button></div>
+<div class="sig" style="margin:12px 0 2px">Prepared by <a href="https://t.me/Bekilife101" target="_blank" rel="noopener">Bekilife101</a></div>
+</div>
+<div id="toast"></div>
+
+<script>
+(function(){
+var BANKS=[{"k": "surgery", "name": "Surgery", "icon": "🔪", "prefix": "qb", "total": 1617}, {"k": "im", "name": "Internal Medicine", "icon": "🩺", "prefix": "imq", "total": 807}, {"k": "obgyn", "name": "OB & Gyn", "icon": "🤰", "prefix": "obg", "total": 1350}, {"k": "pediatrics", "name": "Pediatrics", "icon": "🧸", "prefix": "ped", "total": 995}, {"k": "publichealth", "name": "Public Health", "icon": "🌍", "prefix": "ph", "total": 729}];
+BANKS.push({k:'mine',name:'My questions',icon:'✏️',prefix:'my',total:0});
+function myqRead(){return lsJ('qeb-myq',[])}
+function syncMine(){var m=BANKS[BANKS.length-1];if(m&&m.k==='mine')m.total=myqRead().length}
+function LIVE(){syncMine();return BANKS.filter(function(b){return b.k!=='mine'||b.total>0})}
+function ACTIVE(){var a=S.subjects,L=LIVE();return (a&&a.length)?L.filter(function(b){return b.k==='mine'||a.indexOf(b.k)>=0}):L}
+var NAMES={},PFX={},BY={};BANKS.forEach(function(b){NAMES[b.k]=b.name;PFX[b.k]=b.prefix;BY[b.k]=b});
+var $=function(id){return document.getElementById(id)};
+var frame=$('frame'),back=$('back'),gear=$('gear'),title=$('title'),sheet=$('sheet'),scrim=$('scrim');
+var screens={home:$('home'),search:$('search'),mixed:$('mixed'),insights:$('insights'),keyrev:$('keyrev'),breakr:$('breakr'),flash:$('flash'),study:$('study'),myq:$('myq')};
+var view='home',current=null,navN=0,TOP={home:1,study:1,insights:1,breakr:1},lastTab='home';
+var native=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
+function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toast(m){var t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(function(){t.style.display='none'},2800)}
+function lsJ(k,d){try{return JSON.parse(localStorage.getItem(k)||'null')||d}catch(e){return d}}
+function lsS(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function hkey(item){var h=5381,t=item.question+'|'+item.options.join('|');for(var i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return 'h'+(h>>>0).toString(36)}
+function scorable(q){return !!(q.answer&&q.options&&q.options.length>1)}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+/* ---------- data loading ---------- */
+var KR=lsJ('qeb-keyrev',{});
+function applyKR(D){D.forEach(function(q){var r=KR[hkey(q)];if(!r)return;if(r.s==='change'&&r.l)q.answer=r.l;q.unc=0})}
+var DATAC={};
+async function loadData(k){
+  if(k==='mine'){DATAC.mine=myqData();return DATAC.mine}
+  if(DATAC[k])return DATAC[k];
+  var el=$('b-'+k),txt;
+  if(el)txt=el.textContent;else{var r=await fetch('banks/'+k+'.html');txt=await r.text()}
+  var m=/const DATA =\s*/.exec(txt),a=m.index+m[0].length,d=0,ins=false,es=false,e=a;
+  for(var i=a;i<txt.length;i++){var c=txt.charCodeAt(i);
+    if(ins){if(es)es=false;else if(c===92)es=true;else if(c===34)ins=false}
+    else if(c===34)ins=true;else if(c===91)d++;else if(c===93){d--;if(!d){e=i+1;break}}}
+  DATAC[k]=JSON.parse(txt.slice(a,e));applyKR(DATAC[k]);return DATAC[k];
+}
+/* ---------- settings ---------- */
+var S=lsJ('qeb-settings',{});function save(){lsS('qeb-settings',S)}
+function win(){try{return view==='bank'&&current?frame.contentWindow:null}catch(e){return null}}
+function fn(w,n){try{return !!w&&typeof w[n]==='function'}catch(e){return false}}
+function applyShellTheme(){var t=S.theme||'auto',r=document.documentElement;if(t==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',t);if(S.palette&&S.palette!=='teal')r.setAttribute('data-palette',S.palette);else r.removeAttribute('data-palette')}
+function applyTheme(w){var t=S.theme;if(!t)return;var d=w.document.documentElement,eff=t;
+  try{if(t==='auto'){w.localStorage.removeItem('qb-theme');eff=w.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}else w.localStorage.setItem('qb-theme',t)}catch(e){}
+  d.setAttribute('data-theme',eff);if(fn(w,'updateThemeBtn'))w.updateThemeBtn()}
+function setCheck(w,id,v){var el=w.document.getElementById(id);if(!el||el.checked===v)return;el.checked=v;el.dispatchEvent(new Event('change'))}
+function applyAll(w){if(!w)return;skinBank(w);try{
+  applyTheme(w);
+  if(S.palette&&fn(w,'setPalette'))w.setPalette(S.palette);
+  if(S.ui!==undefined){try{if(S.ui==='auto')w.localStorage.removeItem('qb-ui');else w.localStorage.setItem('qb-ui',S.ui)}catch(e){}if(fn(w,'__applyUI'))w.__applyUI()}
+  if(S.lock!==undefined)setCheck(w,'lockexp',!!S.lock);
+  if(S.instant!==undefined)setCheck(w,'instant',!!S.instant);
+  w.document.documentElement.style.zoom=S.zoom||1;
+}catch(e){}}
+function syncSheet(){
+  try{renderSubj()}catch(e){}
+  document.querySelectorAll('#s-theme button').forEach(function(b){b.classList.toggle('on',b.dataset.v===(S.theme||'auto'))});
+  document.querySelectorAll('#s-quotes button').forEach(function(b){b.classList.toggle('on',b.dataset.v===(S.quotes||'mixed'))});
+  document.querySelectorAll('#s-ui button').forEach(function(b){b.classList.toggle('on',b.dataset.v===(S.ui||'auto'))});
+  document.querySelectorAll('#s-zoom button').forEach(function(b){b.classList.toggle('on',parseFloat(b.dataset.v)===parseFloat(S.zoom||1))});
+  $('s-palette').value=S.palette||'teal';$('s-lock').checked=!!S.lock;$('s-instant').checked=!!S.instant;$('s-exam').value=S.exam||'';$('s-remind').checked=!!S.remind;$('s-remind-at').value=S.remindAt||'19:00';$('remind-note').textContent=native?'You get one notification a day at this time.':'Reminders work in the installed app and need notification permission.';
+  var w=win(),inBank=view==='bank';
+  $('tools-sec').style.display=inBank?'block':'none';
+  $('tools-name').textContent=inBank?NAMES[current]:'';
+  $('sheet-title').textContent=inBank?'Settings & tools':'Settings';
+  var avail={stats:'toggleStats',copy:'copyAll',export:'exportNotes',import:'importNotes',importclip:'mergeState',ai:'toggleAIcfg'};
+  document.querySelectorAll('.tools button[data-t]').forEach(function(b){b.disabled=!fn(w,avail[b.dataset.t])});
+  $('ver').textContent='Quali Exam Bank'+(CFG&&CFG.versionName?' v'+CFG.versionName:'');
+}
+function seg(id,key,num){$(id).addEventListener('click',function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;S[key]=num?parseFloat(v):v;save();if(key==='theme')applyShellTheme();applyAll(win());syncSheet()})}
+seg('s-quotes','quotes');seg('s-theme','theme');seg('s-ui','ui');seg('s-zoom','zoom',true);
+$('s-palette').addEventListener('change',function(){S.palette=this.value;save();applyShellTheme();applyAll(win())});
+$('s-lock').addEventListener('change',function(){S.lock=this.checked;save();applyAll(win())});
+$('s-instant').addEventListener('change',function(){S.instant=this.checked;save();applyAll(win())});
+$('s-exam').addEventListener('change',function(){S.exam=this.value||undefined;save();refreshHome()});
+$('s-exam-x').addEventListener('click',function(){S.exam=undefined;save();$('s-exam').value='';refreshHome()});
+$('s-quotes').addEventListener('click',function(){qIdx=null;showQuote(false)});
+applyShellTheme();
+function openSheet(){syncSheet();sheet.style.display='block';scrim.style.display='block'}
+function closeSheet(){sheet.style.display='none';scrim.style.display='none'}
+gear.addEventListener('click',openSheet);scrim.addEventListener('click',closeSheet);$('sheet-x').addEventListener('click',closeSheet);
+/* ---------- sharing / saving ---------- */
+async function shareText(name,text){
+  var P=window.Capacitor&&Capacitor.Plugins;
+  if(native&&P&&P.Filesystem&&P.Share){
+    try{var r=await P.Filesystem.writeFile({path:name,data:text,directory:'CACHE',encoding:'utf8'});
+      await P.Share.share({title:name,url:r.uri,dialogTitle:'Save or send'});return true}
+    catch(e){if(/cancel|dismiss/i.test(String(e&&e.message||e)))return true}
+  }
+  try{var f=new File([text],name,{type:'application/json'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});return true}}catch(e){if(e&&e.name==='AbortError')return true}
+  try{await navigator.clipboard.writeText(text);toast('Copied to clipboard. Paste it into a note or message to keep it.');return true}catch(e){}
+  try{var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));a.download=name;a.click();return true}catch(e){}
+  return false;
+}
+/* ---------- bank tools ---------- */
+async function exportNotes(w){
+  var json;
+  try{json=w.eval('JSON.stringify({notes:NOTES,stickynotes:SN,highlights:HL,progress:PROG,flags:FLAGS,reports:REPS,times:TIMES},null,1)')}catch(e){if(fn(w,'exportNotes'))w.exportNotes();return}
+  await shareText('qbank-'+current+'-notes.json',json);
+}
+async function importClip(w){
+  var txt='';try{txt=await navigator.clipboard.readText()}catch(e){txt=prompt('Paste your exported notes here:')||''}
+  if(!txt)return;
+  try{w.mergeState(JSON.parse(txt));if(fn(w,'render'))w.render();toast('Notes imported.')}catch(e){toast('That is not a valid notes export.')}
+}
+document.querySelector('.tools').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b||b.disabled||!b.dataset.t)return;var w=win();if(!w)return;var t=b.dataset.t;
+  if(t==='stats'){closeSheet();w.toggleStats();w.scrollTo(0,0)}
+  else if(t==='copy'){w.copyAll();closeSheet();toast('Questions copied to clipboard.')}
+  else if(t==='export'){closeSheet();exportNotes(w)}
+  else if(t==='import'){closeSheet();var i=w.document.getElementById('imp-file');if(i)i.click()}
+  else if(t==='importclip'){closeSheet();importClip(w)}
+  else if(t==='ai'){closeSheet();w.toggleAIcfg(true);w.scrollTo(0,0)}
+});
+/* ---------- backup / restore everything ---------- */
+$('bk-all').addEventListener('click',async function(){
+  var data={};try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k==='qb-ai-cfg'||k==='qb-ai-cache')continue;data[k]=localStorage.getItem(k)}}catch(e){}
+  var day=new Date().toISOString().slice(0,10);
+  closeSheet();await shareText('QualiExamBank-backup-'+day+'.json',JSON.stringify({app:'QualiExamBank',v:1,date:day,data:data}));
+});
+function restore(txt){
+  var o;try{o=JSON.parse(txt)}catch(e){toast('That is not a valid backup.');return}
+  if(!o||o.app!=='QualiExamBank'||!o.data){toast('That is not a Quali Exam Bank backup.');return}
+  if(!confirm('Restore this backup'+(o.date?' from '+o.date:'')+'? It replaces the progress and notes saved on this device.'))return;
+  Object.keys(o.data).forEach(function(k){try{localStorage.setItem(k,o.data[k])}catch(e){}});
+  toast('Restored. Reloading…');setTimeout(function(){location.reload()},900);
+}
+$('bk-file').addEventListener('click',function(){$('bk-input').click()});
+$('bk-input').addEventListener('change',function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){restore(r.result)};r.readAsText(f);this.value=''});
+$('bk-clip').addEventListener('click',async function(){var t='';try{t=await navigator.clipboard.readText()}catch(e){t=prompt('Paste your backup here:')||''}if(t)restore(t)});
+/* ---------- updates ---------- */
+var CFG=null;
+async function loadCfg(){try{var r=await fetch('config.json',{cache:'no-store'});if(r.ok)CFG=await r.json()}catch(e){}}
+async function checkUpdate(silent){
+  if(!CFG||!CFG.repo){if(!silent)toast('Update check works in the installed app.');return}
+  try{var r=await fetch('https://api.github.com/repos/'+CFG.repo+'/releases/latest');if(!r.ok)throw 0;var j=await r.json();
+    var latest=parseInt(String(j.tag_name||'').replace(/\D/g,''),10)||0;
+    if(latest>CFG.version){var as=(j.assets||[]).filter(function(a){return /\.apk$/i.test(a.name)})[0];
+      var url=as?as.browser_download_url:j.html_url,b=$('upd');b.textContent='⬇ Update available (v1.'+latest+'). Tap to download.';b.style.display='block';b.onclick=function(){window.open(url,'_blank')};
+      if(!silent)toast('Update available.')}
+    else if(!silent)toast('You have the latest version.')}
+  catch(e){if(!silent)toast('Could not check for updates (needs internet, and a public repository).')}
+}
+$('chk').addEventListener('click',function(){checkUpdate(false)});
+/* ---------- home ---------- */
+function markDay(){var d=new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10),a=lsJ('qeb-days',[]);if(a.indexOf(d)<0){a.push(d);lsS('qeb-days',a.slice(-400))}}
+function streak(){var a=lsJ('qeb-days',[]),set={};a.forEach(function(x){set[x]=1});var n=0,t=Date.now()-new Date().getTimezoneOffset()*6e4;
+  var day=function(o){return new Date(t-o*864e5).toISOString().slice(0,10)};var o=set[day(0)]?0:1;while(set[day(o)]){n++;o++}return n}
+function bstats(b){var P=lsJ(b.prefix+'-prog',{}),n=0,t=0,c=0,due=0,bad=0,now=Date.now();
+  for(var k in P){var p=P[k];n++;t+=p.n||0;c+=p.c||0;if(p.due<=now)due++;if(p.last==='bad')bad++}
+  return{tried:n,acc:t?Math.round(100*c/t):null,due:due,bad:bad}}
+var COL={mine:'#6b5b95',surgery:'#b5483a',im:'#2b6f8f',obgyn:'#b0577b',pediatrics:'#d19a2e',publichealth:'#3f8a63'};
+var firstHome=true;
+function refreshHome(){
+  syncMine();
+  var g=$('grid');g.innerHTML='';
+  document.getElementById('home').classList.toggle('anim',firstHome);if(firstHome)setTimeout(function(){firstHome=false},900);
+  showQuote(false);
+  (function(){var hr=new Date().getHours(),t=hr<5?'Late night. Rest counts as study too.':hr<12?'Good morning. Let us make today count.':hr<17?'Good afternoon. Keep the momentum going.':hr<21?'Good evening. One more solid block.':'Wind down with a short review, then sleep well.';$('hero-sub').textContent=t})();
+  ACTIVE().forEach(function(b,i){var s=bstats(b),pct=Math.min(100,Math.round(100*s.tried/b.total));
+    var el=document.createElement('button');el.className='card';el.dataset.k=b.k;
+    el.style.setProperty('--c',COL[b.k]||'#0f4c5c');el.style.setProperty('--i',i);
+    var C=113.1,dash=(pct/100*C).toFixed(1);
+    el.innerHTML='<div class="ic">'+b.icon+'</div><div class="cb"><div class="t">'+esc(b.name)+'</div><div class="d">'+s.tried+' / '+b.total+' done'+(s.acc!=null?' · '+s.acc+'% correct':'')+(s.due?' · '+s.due+' due':'')+'</div></div><svg class="ring" viewBox="0 0 46 46" aria-label="'+pct+'% done"><circle cx="23" cy="23" r="18" fill="none" stroke="var(--bd)" stroke-width="5"/><circle cx="23" cy="23" r="18" fill="none" stroke="var(--c)" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+dash+' '+C+'" transform="rotate(-90 23 23)"/><text x="23" y="26.5" text-anchor="middle">'+pct+'%</text></svg>';
+    el.addEventListener('click',function(){if(b.k==='mine'){markDay();show('myq');push();myqRender()}else openBank(b.k)});g.appendChild(el)});
+  var chips=[],st=streak();if(st)chips.push('🔥 '+st+'-day streak');
+  if(S.exam){var dd=Math.ceil((new Date(S.exam+'T00:00:00')-new Date(new Date().toDateString()))/864e5);
+    chips.push(dd>0?'📅 '+dd+' day'+(dd===1?'':'s')+' to exam':dd===0?'📅 Exam is today':'📅 Exam date passed')}
+  $('chips').innerHTML=chips.map(function(c){return '<span class="chip">'+c+'</span>'}).join('');
+  refreshPlan();
+  var last=localStorage.getItem('qeb-last'),c=$('cont');
+  if(last&&BY[last]){c.style.display='block';c.textContent='▶ Continue: '+NAMES[last];c.onclick=function(){openBank(last)}}else c.style.display='none';
+}
+/* ---------- navigation ---------- */
+function show(v){
+  var prevV=view;view=v;navN++;if(prevV==='breakr'&&v!=='breakr'){stopBreath();stopSound()}
+  var sc=screens[v];if(sc){sc.classList.add('enter');setTimeout(function(){sc.classList.remove('enter')},420)}
+  Object.keys(screens).forEach(function(k){screens[k].style.display=k===v?'block':'none'});
+  frame.style.display=v==='bank'?'block':'none';
+  back.style.display=TOP[v]?'none':'';$('tabs').style.display=TOP[v]?'flex':'none';if(TOP[v])lastTab=v;document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.t===v)});
+  gear.textContent=v==='bank'?'⚙ Tools':'⚙ Settings';
+  title.textContent=v==='bank'?NAMES[current]:v==='search'?'Search all banks':v==='mixed'?'Mixed study':v==='insights'?'Insights & plan':v==='keyrev'?'Review answer keys':v==='breakr'?'Take a break':v==='flash'?'Flashcards':v==='study'?'Study':v==='myq'?'My questions':'Quali Exam Bank';
+}
+function push(){if(!native){try{history.pushState({v:view},'')}catch(e){}}}
+function gotoTab(t){
+  if(t==='insights'){show('insights');showInsights()}
+  else if(t==='breakr'){show('breakr');brOpen()}
+  else if(t==='study')show('study');
+  else{show('home');refreshHome()}
+}
+document.querySelectorAll('#tabs button').forEach(function(b){b.addEventListener('click',function(){var t=b.dataset.t;if(t===view)return;if(view==='bank'||!TOP[view]){if(!goHome())return}gotoTab(t)})});
+function goHome(){
+  if(view==='mixed'&&MX&&MX.stage==='quiz'&&!MX.done&&!confirm('Leave this session? '+(MX.mode==='exam'?'Exam answers are only saved when you finish.':'Answers you already revealed are saved.')))return false;
+  stopTimer();stopBreath();stopSound();current=null;frame.removeAttribute('src');frame.srcdoc='';var t0=TOP[view]?'home':lastTab;closeSheet();gotoTab(t0);return true;
+}
+var CSS='#brand,.toolsrow,.chkgrp,#more-btn{display:none!important}';
+
+function skinCSS(){
+  var cs=getComputedStyle(document.documentElement),g=function(n){return cs.getPropertyValue(n).trim()},
+      bg=g('--bg'),fg=g('--fg'),card=g('--card'),bd=g('--bd'),ac=g('--accent'),on=g('--on'),mu=g('--muted'),
+      mx=function(a,pa,b){return 'color-mix(in srgb,'+a+' '+pa+'%,'+b+')'},
+      dark=(function(){var t=document.documentElement.getAttribute('data-theme');return t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches})();
+  var v={'--bg':bg,'--fg':fg,'--card':card,'--bd':bd,'--bd2':mx(bd,70,fg),'--bd3':mx(bd,55,fg),'--muted':mu,'--muted2':mx(mu,70,bg),
+    '--btn':mx(card,70,bg),'--btn-h':mx(ac,12,card),'--btn-s':mx(card,70,bg),'--btn-sh':mx(ac,12,card),
+    '--chip':mx(ac,10,card),'--chip-sub':mx(ac,14,card),'--chip-sub-bd':mx(ac,35,bd),'--hover':mx(ac,6,card),'--sel':mx(ac,16,card),
+    '--ok':g('--okbg'),'--ok-bd':g('--ok'),'--bad':g('--badbg'),'--bad-bd':g('--bad'),'--exp':mx(bg,55,card),'--flag-btn':card,
+    '--accent':ac,'--accent-bd':mx(ac,82,fg),'--on-accent':on,'--accent-soft':mx(ac,15,card),'--shadow':g('--shadow'),
+    '--font-read':g('--serif')};
+  var o=':root{'+Object.keys(v).map(function(k){return k+':'+v[k]+' !important'}).join(';')+';color-scheme:'+(dark?'dark':'light')+'}';
+  o+='body{background:var(--bg)!important}#top,.qblock{border-radius:16px!important}button.tool{border-radius:10px}';
+  return o;
+}
+function skinBank(w){try{var d=w.document,st=d.getElementById('qeb-skin');if(!st){st=d.createElement('style');st.id='qeb-skin';d.head.appendChild(st)}st.textContent=CSS+skinCSS()}catch(e){}}
+try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){setTimeout(function(){var w=win();if(w)skinBank(w)},60)})}catch(e){}
+
+frame.addEventListener('load',function(){if(view!=='bank'||!current)return;var w=win();if(!w)return;
+  applyAll(w);hookBank(w);applyKRbank(w)});
+function applyKRbank(w){try{if(!Object.keys(KR).length)return;var D=w.eval('DATA'),ch=0;D.forEach(function(q){var r=KR[hkey(q)];if(!r)return;if(r.s==='change'&&r.l&&q.answer!==r.l){q.answer=r.l;ch=1}if(q.unc){q.unc=0;ch=1}});if(ch&&fn(w,'applyFilters'))w.applyFilters()}catch(e){}}
+function hookBank(w){try{var o=w.recordAttempt,k0=current;if(typeof o!=='function'||o.__q)return;
+  var f=function(it){var key,b=0,pre=null;try{key=w.hkey(it);var p0=w.eval('PROG')[key]||{};b=p0.n||0;pre={iv:p0.iv,box:p0.box,e:p0.e,lap:p0.lap}}catch(e){}
+    var r=o.apply(this,arguments);
+    try{var P=w.eval('PROG'),p=P[key];if(p&&(p.n||0)>b){logAttempt(k0,it,p.last==='ok');p.pv=pre;sched(p,p.last==='ok','sure',pre);w.eval("saveStore('"+PFX[k0]+"-prog',PROG)")}}catch(e){}
+    return r};f.__q=1;w.recordAttempt=f}catch(e){}}
+function openBank(k){
+  current=k;markDay();try{localStorage.setItem('qeb-last',k)}catch(e){}
+  var el=$('b-'+k);
+  if(el){frame.removeAttribute('src');frame.srcdoc=el.textContent.replace(/<\\\/script/g,'</script')}
+  else{frame.removeAttribute('srcdoc');frame.src='banks/'+k+'.html'}
+  show('bank');push();
+}
+back.addEventListener('click',function(){
+  if(view==='home')return;
+  if(native)goHome();else{var n0=navN;try{history.back()}catch(e){goHome()}setTimeout(function(){if(navN===n0&&view!=='home')goHome()},150)}
+});
+window.addEventListener('popstate',function(){if(view!=='home'&&!goHome())push()});
+try{var App=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.App;
+  if(App&&App.addListener)App.addListener('backButton',function(){
+    if(sheet.style.display==='block')closeSheet();
+    else if(view!=='home')goHome();
+    else App.exitApp()})}catch(e){}
+$('go-search').addEventListener('click',function(){show('search');push();initSearch()});
+$('go-mixed').addEventListener('click',function(){markDay();show('mixed');push();mxSetup()});
+/* ---------- search all banks ---------- */
+var searchReady=false,searchTimer=null;
+async function initSearch(){
+  if(!searchReady){$('q-info').textContent='Loading questions…';
+    try{for(var i=0;i<BANKS.length;i++)await loadData(BANKS[i].k);searchReady=true}catch(e){$('q-info').textContent='Could not load the banks.';return}}
+  $('q-info').textContent='Type at least 2 letters.';runSearch();
+}
+function runSearch(){
+  if(!searchReady)return;
+  var q=$('q').value.trim().toLowerCase(),unc=$('q-unc').checked,out=[],total=0;
+  if(q.length<2&&!unc){$('q-res').innerHTML='';$('q-info').textContent='Type at least 2 letters.';return}
+  BANKS.forEach(function(b){DATAC[b.k].forEach(function(it){
+    if(unc&&!it.unc)return;
+    if(q.length>=2&&(it.question+' '+(it.options||[]).join(' ')).toLowerCase().indexOf(q)<0)return;
+    total++;if(out.length<60)out.push({b:b,it:it})})});
+  $('q-info').textContent=total+' match'+(total===1?'':'es')+(total>60?' (showing first 60)':'');
+  var h='';out.forEach(function(r,i){h+='<div class="hit" data-i="'+i+'"><div class="m">'+esc(r.b.name)+' · '+esc(r.it.topic||'')+(r.it.unc?' · <span class="warn">key uncertain ⚠</span>':'')+'</div><div class="q">'+esc(r.it.question.length>260?r.it.question.slice(0,260)+'…':r.it.question)+'</div></div>'});
+  $('q-res').innerHTML=h;SR=out;
+}
+var SR=[];
+$('q').addEventListener('input',function(){clearTimeout(searchTimer);searchTimer=setTimeout(runSearch,250)});
+$('q-unc').addEventListener('change',runSearch);
+$('q-res').addEventListener('click',function(e){
+  var h=e.target.closest('.hit');if(!h)return;var r=SR[+h.dataset.i];if(!r)return;
+  var x=h.querySelector('.full');if(x){x.remove();return}
+  var it=r.it,d=document.createElement('div');d.className='full';
+  d.innerHTML='<div class="qt">'+esc(it.question)+'</div>'+(it.options||[]).map(function(o){var L=o.charAt(0);return '<div class="opt'+(L===it.answer?' right':'')+'" style="cursor:default">'+esc(o)+'</div>'}).join('')+explHtml(it);
+  h.appendChild(d);
+});
+function explHtml(it){var h='';
+  if(it.core)h+='<div class="expl"><b>Key point</b>\n'+esc(it.core)+'</div>';
+  if(it.correct_expl)h+='<div class="expl"><b>Why the answer is right</b>\n'+esc(it.correct_expl)+'</div>';
+  if(it.incorrect_expl)h+='<div class="expl"><b>Why the others are wrong</b>\n'+esc(it.incorrect_expl)+'</div>';
+  if(it.unc)h+='<div class="expl warn">The answer key for this question is marked uncertain. Check a textbook.</div>';
+  return h}
+/* ---------- mixed study ---------- */
+var MX=null,timer=null;
+function celebrate(){var E=['🎉','✨','⭐','💚','🩺'];for(var i=0;i<26;i++){(function(i){var e=document.createElement('span');e.className='fall';e.textContent=E[i%E.length];e.style.left=Math.random()*94+'%';e.style.animationDelay=(Math.random()*.7)+'s';e.style.fontSize=(18+Math.random()*16)+'px';document.body.appendChild(e);setTimeout(function(){e.remove()},3400)})(i)}}
+function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+
+/* ---------- adaptive review scheduling ---------- */
+function sched(p,ok,conf,pre){
+  var now=Date.now();pre=pre||{};
+  var iv=(pre.iv!=null)?pre.iv:[0,1,3,7,14,30][Math.min(5,pre.box||0)],e=pre.e||2.3,lap=pre.lap||0;conf=conf||'sure';
+  if(!ok){lap++;e=Math.max(1.3,e-0.2);iv=0}
+  else if(conf==='guess'){iv=1;e=Math.max(1.3,e-0.1)}
+  else if(conf==='unsure'){iv=Math.max(1,Math.ceil(iv*1.2))}
+  else{iv=iv<1?1:Math.ceil(iv*e);e=Math.min(2.8,e+0.05)}
+  iv=Math.min(iv,180);
+  p.iv=iv;p.e=Math.round(e*100)/100;p.lap=lap;p.l=lap>=3?1:0;
+  p.box=iv>=30?5:iv>=14?4:iv>=7?3:iv>=3?2:iv>=1?1:0;
+  var due=iv?now+iv*864e5:now,L=daysLeft();
+  if(L!=null&&L>2&&due>now+(L-2)*864e5)due=now+(L-2)*864e5;
+  p.due=due;
+}
+function dayStr(off){return new Date(Date.now()-new Date().getTimezoneOffset()*6e4-(off||0)*864e5).toISOString().slice(0,10)}
+function logAttempt(bk,q,ok){
+  var L=lsJ('qeb-log',{}),d=dayStr(0),o=L[d]||(L[d]={n:0,c:0,b:{}});o.n++;if(ok)o.c++;
+  var bb=o.b[bk]||(o.b[bk]=[0,0]);bb[0]++;if(ok)bb[1]++;
+  var ks=Object.keys(L).sort();while(ks.length>240)delete L[ks.shift()];lsS('qeb-log',L);
+}
+function recordProg(bk,q,L,conf){
+  var key=PFX[bk]+'-prog',P=lsJ(key,{}),k=hkey(q),p=P[k]||{n:0,c:0,box:0},ok=(L===q.answer),now=Date.now();
+  var pre={iv:p.iv,box:p.box,e:p.e,lap:p.lap};p.n++;if(ok)p.c++;p.last=ok?'ok':'bad';p.la=L;p.t=now;p.pv=pre;sched(p,ok,conf,pre);P[k]=p;lsS(key,P);logAttempt(bk,q,ok);
+  var tk=PFX[bk]+'-times',T=lsJ(tk,{});T['p:'+k]=now;lsS(tk,T);
+}
+function mxSetup(){
+  MX={stage:'setup'};stopTimer();
+  var h='<div class="panel"><h3>Mixed study</h3><div class="note" style="margin:0 0 8px">Questions are drawn from the banks you tick, so you practise like the real qualifying exam.</div>';
+  LIVE().forEach(function(b){h+='<label class="lbl"><input type="checkbox" class="mx-b" value="'+b.k+'"'+(ACTIVE().indexOf(b)>=0?' checked':'')+'> '+b.icon+' '+esc(b.name)+'</label>'});
+  h+='</div><div class="panel"><div class="row"><span>Which questions</span><select id="mx-src"><option value="smart">Smart mix (due, wrong, then new)</option><option value="new">Not attempted yet</option><option value="wrong">Got wrong last time</option><option value="due">Due for review</option><option value="leech">Trouble questions (missed 3+ times)</option><option value="guessed">Marked as guessed</option><option value="flagged">Flagged by me</option><option value="any">Anything</option></select></div>'
+   +'<div class="row"><span>How many</span><select id="mx-n"><option>10</option><option selected>20</option><option>40</option><option>60</option><option>100</option></select></div>'
+   +'<div class="row"><span>Mode</span><div class="seg" id="mx-mode"><button data-v="practice" class="on">Practice</button><button data-v="exam">Timed exam</button></div></div>'
+   +'<div class="row" id="mx-min-row" style="display:none"><span>Minutes</span><input type="number" id="mx-min" min="1" max="300" value="24" style="width:90px"></div>'
+   +'<div class="note">Practice shows the answer and explanation straight away. A timed exam shows them at the end.</div></div>'
+   +'<button class="big" style="width:100%" id="mx-go">Start</button>';
+  $('mx').innerHTML=h;
+  $('mx-mode').addEventListener('click',function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;MX.modeSel=v;this.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b===e.target)});$('mx-min-row').style.display=v==='exam'?'flex':'none'});
+  $('mx-n').addEventListener('change',function(){$('mx-min').value=Math.max(1,Math.round(this.value*1.2))});
+  $('mx-go').addEventListener('click',mxStart);MX.modeSel='practice';
+}
+function mxStart(){
+  var banks=[].slice.call(document.querySelectorAll('.mx-b')).filter(function(c){return c.checked}).map(function(c){return c.value});
+  if(!banks.length){toast('Tick at least one subject.');return}
+  var n=parseInt($('mx-n').value,10);
+  mxRun({banks:banks,src:$('mx-src').value,n:n,mode:MX.modeSel,mins:parseInt($('mx-min').value,10)||Math.round(n*1.2)});
+}
+async function mxRun(o){
+  toast('Preparing questions…');
+  var pri=[],nw=[],oth=[],now=Date.now(),src=o.src||'smart';
+  try{for(var i=0;i<o.banks.length;i++){var k=o.banks[i],D=await loadData(k),P=lsJ(PFX[k]+'-prog',{}),F=lsJ(PFX[k]+'-flags',{});
+    D.forEach(function(q){if(!scorable(q))return;if(o.topics&&!o.topics[k+'|'+q.topic])return;var p=P[hkey(q)],r={q:q,b:k};
+      if(src==='new'){if(!p)pri.push(r)}
+      else if(src==='wrong'){if(p&&p.last==='bad')pri.push(r)}
+      else if(src==='due'){if(p&&p.due<=now)pri.push(r)}
+      else if(src==='guessed'){if(p&&p.g)pri.push(r)}
+      else if(src==='leech'){if(p&&p.l)pri.push(r)}
+      else if(src==='flagged'){if(F[hkey(q)])pri.push(r)}
+      else if(src==='any')pri.push(r);
+      else{if(p&&(p.due<=now||p.last==='bad'))pri.push(r);else if(!p)nw.push(r);else oth.push(r)}})}}
+  catch(e){toast('Could not load the banks.');return}
+  var pool=src==='smart'?shuffle(pri).concat(shuffle(nw),shuffle(oth)):shuffle(pri);
+  pool=shuffle(pool.slice(0,o.n||20));
+  if(!pool.length){toast('No questions match. Try another option.');return}
+  var mode=o.mode||'practice',mins=o.mins||Math.round(pool.length*1.2);
+  MX={stage:'quiz',items:pool,i:0,ans:{},rec:{},conf:{},mode:mode,done:false,end:mode==='exam'?Date.now()+mins*6e4:0};
+  stopTimer();if(mode==='exam')timer=setInterval(tick,1000);
+  mxRender();
+}
+function applyConf(bk,q,c){
+  var key=PFX[bk]+'-prog',P=lsJ(key,{}),k=hkey(q),p=P[k];if(!p)return;var now=Date.now();
+  sched(p,p.last==='ok',c,p.pv||{iv:p.iv,box:p.box,e:p.e,lap:p.lap});
+  if(c==='guess')p.g=1;else if(c==='sure'&&p.last==='ok')p.g=0;
+  P[k]=p;lsS(key,P);var tk=PFX[bk]+'-times',T=lsJ(tk,{});T['p:'+k]=now;lsS(tk,T);
+}
+function tick(){if(!MX||MX.sim||MX.stage!=='quiz'||MX.done||MX.mode!=='exam'){if(!MX||MX.mode!=='exam')stopTimer();return}
+  var left=Math.max(0,MX.end-Date.now()),el=$('mx-clock');
+  if(el)el.textContent='⏱ '+Math.floor(left/6e4)+':'+('0'+Math.floor(left%6e4/1000)).slice(-2);
+  if(left<=0){stopTimer();toast('Time is up.');mxFinish()}}
+function mxChoose(L){
+  var r=MX.items[MX.i];
+  if(MX.ans[MX.i]===undefined){var cnt=Object.keys(MX.ans).length+1;if(cnt%25===0)setTimeout(function(){toast('That is '+cnt+' questions. A five-minute break helps memory.')},400)}
+  if(MX.mode==='practice'){if(MX.ans[MX.i])return;MX.ans[MX.i]=L;var el=(Date.now()-(MX.t0||Date.now()))/1000;recordProg(r.b,r.q,L,el>90?'unsure':undefined);MX.rec[MX.i]=1}
+  else MX.ans[MX.i]=L;
+  mxRender();
+}
+function mxRender(){
+  if(MX.ti!==MX.i){MX.ti=MX.i;MX.t0=Date.now()}
+  var r=MX.items[MX.i],q=r.q,L=MX.ans[MX.i],reveal=MX.mode==='practice'&&L;
+  var h='<div class="panel"><div class="qh"><span>Q '+(MX.i+1)+' / '+MX.items.length+' · '+esc(NAMES[r.b])+(q.topic?' · '+esc(q.topic):'')+'</span><span id="mx-clock"></span></div><div class="qt">'+esc(q.question)+'</div>';
+  q.options.forEach(function(o){var l=o.charAt(0),c='opt';
+    if(reveal){if(l===q.answer)c+=' right';else if(l===L)c+=' wrong'}else if(l===L)c+=' sel';
+    h+='<button class="'+c+'" data-l="'+esc(l)+'">'+esc(o)+'</button>'});
+  if(reveal||MX.mode==='exam'){h+='<div class="conf">How sure were you? '+['sure','unsure','guess'].map(function(c){return '<button data-c="'+c+'" class="'+(MX.conf[MX.i]===c?'on':'')+'">'+c.charAt(0).toUpperCase()+c.slice(1)+'</button>'}).join('')+'</div>'}
+  if(reveal)h+=explHtml(q);
+  h+='</div><div class="nav"><button class="ib" id="mx-prev"'+(MX.i?'':' disabled')+'>← Prev</button>'
+   +(MX.i<MX.items.length-1?'<button class="ib p" id="mx-next">Next →</button>':'<button class="ib p" id="mx-fin">Finish</button>')+'</div>'
+   +'<div class="note" style="text-align:center">Answered '+Object.keys(MX.ans).length+' of '+MX.items.length+(MX.mode==='exam'?' · <a href="#" id="mx-early" style="color:var(--accent)">finish now</a>':'')+'</div>';
+  $('mx').innerHTML=h;tick();
+  $('mx').querySelectorAll('.opt').forEach(function(b){b.addEventListener('click',function(){mxChoose(b.dataset.l)})});
+  $('mx').querySelectorAll('.conf button').forEach(function(b){b.addEventListener('click',function(){MX.conf[MX.i]=b.dataset.c;if(MX.mode==='practice'&&MX.ans[MX.i]){applyConf(r.b,r.q,b.dataset.c);MX.cl=MX.cl||{};var pv=MX.cl[MX.i];if(pv)calAdd(pv.c,pv.ok,-1);var okc=MX.ans[MX.i]===r.q.answer;calAdd(b.dataset.c,okc,1);MX.cl[MX.i]={c:b.dataset.c,ok:okc}}mxRender()})});
+  var p=$('mx-prev');if(p)p.addEventListener('click',function(){MX.i--;mxRender();screens.mixed.scrollTop=0});
+  var nx=$('mx-next');if(nx)nx.addEventListener('click',function(){MX.i++;mxRender();screens.mixed.scrollTop=0});
+  var f=$('mx-fin');if(f)f.addEventListener('click',function(){if(MX.mode==='exam'&&Object.keys(MX.ans).length<MX.items.length&&!confirm('Some questions are unanswered. Finish anyway?'))return;mxFinish()});
+  var e=$('mx-early');if(e)e.addEventListener('click',function(ev){ev.preventDefault();if(confirm('Finish the exam now?'))mxFinish()});
+}
+function mxFinish(){
+  stopTimer();MX.done=true;
+  if(MX.mode==='exam')MX.items.forEach(function(r,i){if(MX.ans[i]&&!MX.rec[i]){recordProg(r.b,r.q,MX.ans[i],MX.conf[i]);MX.rec[i]=1;if(MX.conf[i]){applyConf(r.b,r.q,MX.conf[i]);calAdd(MX.conf[i],MX.ans[i]===r.q.answer,1)}}});
+  var ok=0,per={},wrong=[];
+  MX.items.forEach(function(r,i){var L=MX.ans[i],good=L===r.q.answer;per[r.b]=per[r.b]||{n:0,c:0};per[r.b].n++;if(good){ok++;per[r.b].c++}else wrong.push(i)});
+  var N=MX.items.length,pct=Math.round(1000*ok/N)/10;
+  try{var ss=lsJ('qeb-sessions',[]);ss.push({t:Date.now(),m:MX.mode,n:N,c:ok,b:Object.keys(per)});lsS('qeb-sessions',ss.slice(-60))}catch(e){}
+  var answeredN=Object.keys(MX.ans).length,sureN=0,sureWrong=0;Object.keys(MX.conf||{}).forEach(function(i){if(MX.conf[i]==='sure'&&MX.ans[i]){sureN++;if(MX.ans[i]!==MX.items[i].q.answer)sureWrong++}});
+  var rk=resultRemark(ok,N,N-answeredN,sureN,sureWrong,MX.timeouts||0);
+  var C2=326.7,h='<div class="panel" style="text-align:center"><div class="scorering"><svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--bd)" stroke-width="10"/><circle cx="60" cy="60" r="52" fill="none" stroke="'+(pct>=60?'var(--ok)':'var(--warm)')+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+(pct/100*C2).toFixed(1)+' '+C2+'" transform="rotate(-90 60 60)"/></svg><div class="sc"><div class="big2">'+ok+' / '+N+'</div><div>'+pct+'%</div></div></div></div>'+remarkCard(rk)+'<div class="panel"><h3>By subject</h3>';
+  Object.keys(per).forEach(function(k){h+='<div class="res">'+esc(NAMES[k])+': '+per[k].c+' / '+per[k].n+'</div>'});
+  h+='</div>'+quoteCard();
+  if(wrong.length){h+='<div class="panel"><h3>Missed or unanswered ('+wrong.length+')</h3>';
+    wrong.forEach(function(i){var r=MX.items[i];h+='<div class="hit" data-i="'+i+'"><div class="m">'+esc(NAMES[r.b])+' · your answer: '+(MX.ans[i]||'none')+' · correct: '+esc(r.q.answer)+'</div><div class="q">'+esc(r.q.question.length>200?r.q.question.slice(0,200)+'…':r.q.question)+'</div></div>'});
+    h+='</div>'}
+  h+='<div class="actions"><button class="big" id="mx-again">New session</button>'+(wrong.length?'<button class="big alt" id="mx-redo">Redo the missed ones</button>':'<button class="big alt" id="mx-home">Home</button>')+'</div>';
+  $('mx').innerHTML=h;MX.stage='result';if(pct>=80&&N>=5)celebrate();MX.wrongIdx=wrong;screens.mixed.scrollTop=0;
+  $('mx-again').addEventListener('click',mxSetup);
+  var rd=$('mx-redo');if(rd)rd.addEventListener('click',function(){var items=MX.wrongIdx.map(function(i){return MX.items[i]});MX={stage:'quiz',items:shuffle(items),i:0,ans:{},rec:{},conf:{},mode:'practice',done:false,end:0};mxRender()});
+  var hm=$('mx-home');if(hm)hm.addEventListener('click',goHome);
+  $('mx').querySelectorAll('.hit').forEach(function(el){el.addEventListener('click',function(){
+    var x=el.querySelector('.full');if(x){x.remove();return}var r=MX.items[+el.dataset.i],d=document.createElement('div');d.className='full';
+    d.innerHTML='<div class="qt">'+esc(r.q.question)+'</div>'+r.q.options.map(function(o){var l=o.charAt(0);return '<div class="opt'+(l===r.q.answer?' right':(l===MX.ans[+el.dataset.i]?' wrong':''))+'" style="cursor:default">'+esc(o)+'</div>'}).join('')+explHtml(r.q);el.appendChild(d)})});
+}
+
+
+/* ---------- calibration & funny remarks ---------- */
+function pickR(a){return a[Math.floor(Math.random()*a.length)]}
+function remarkCard(r){return r?'<div class="panel remark"><div class="em">'+r[0]+'</div><p>'+esc(r[1])+'</p></div>':''}
+function calAdd(c,ok,d){var C=lsJ('qeb-cal',{}),x=C[c]||[0,0];x[0]=Math.max(0,x[0]+d);x[1]=Math.max(0,x[1]+(ok?d:0));C[c]=x;lsS('qeb-cal',C)}
+var RM={
+ low:[['🪙','That score lost to a coin flip. Good news: coins cannot study, and you can.'],['🛰','Think of this as reconnaissance. You now know exactly where the enemy is hiding.'],['🏳️','The bank won this round. Rematch in five minutes?']],
+ weak:[['🧗','Not your day, but the pattern is clear. A few more rounds and this topic is yours.'],['🤝','You are closer to passing than you think. Run the weak-topic drill next.'],['🫠','Some of these answers were brave. Bravery is not on the syllabus.']],
+ mid:[['😌','The comfortable middle of the bell curve. Nobody gets honours from the middle, though.'],['🧩','Passing energy detected. Now turn the lucky guesses into actual knowledge.'],['🚲','Steady pace. Faster is possible, and it only costs more reps.']],
+ good:[['🧐','That was suspiciously good. Did you actually read the book?'],['🎓','Strong showing. The examiners would nod politely.'],['🔥','Look at you go. Do not tell the exam, it might get nervous.']],
+ great:[['🏆','Who is this, and what have you done with the student who cried over this topic?'],['🍾','If this were the real exam, the champagne would already be in the fridge.'],['😎','Show-off. A delightful one, but still a show-off.']],
+ blank:[['🕳','You left {u} blank. In an exam a guess has a chance and a blank has none.'],['🫥','{u} unanswered. The bank cannot read your mind, and neither can the examiner.']],
+ sure:[['🤨','You rated {s} wrong answers as Sure. Huh. Confidence is not the same thing as correct.'],['🎺','Very confident, very wrong, {s} times. Style points, zero marks.']],
+ time:[['⏰','A section ran out of time. The clock remains undefeated.'],['🐢','The timer won a section. Practise speed: answer first, doubt later.']]
+};
+function resultRemark(ok,N,unans,sureN,sureWrong,timeouts){
+  var pct=N?ok/N:0,out=[];
+  if(sureN>=3&&sureWrong>=3&&sureWrong/sureN>=0.4)out.push(pickR(RM.sure));
+  if(unans/N>=0.25&&unans>=3)out.push(pickR(RM.blank));
+  if(timeouts)out.push(pickR(RM.time));
+  var base=pct<0.3?RM.low:pct<0.5?RM.weak:pct<0.7?RM.mid:pct<0.85?RM.good:RM.great,r=out.length?pickR(out):pickR(base);
+  return [r[0],r[1].replace('{u}',unans).replace('{s}',sureWrong)];
+}
+var CALR={
+ over:[['😬','Too confident, huh? Your "Sure" answers are right only {p}% of the time. Slow down on the ones that feel obvious.'],['🎭','Certainty is doing a lot of acting here. {p}% right when you said Sure.']],
+ under:[['🤔','Your "guesses" are right {p}% of the time. That is not guessing, that is knowing with extra steps.'],['🕵️','Suspiciously accurate for someone who claims to be guessing ({p}%).']],
+ doubt:[['🥺','You marked many answers Unsure and got {p}% of them right. You know more than you give yourself credit for.']],
+ good:[['⚖️','Well calibrated: your Sure answers are right {p}% of the time. Trust that instinct.'],['🎯','Your confidence matches your results. Rare, and very useful in the exam hall.']],
+ few:[['🌱','Not enough ratings yet. Rate your answers for a few more sessions and I can tell whether to trust you.']]
+};
+function calVerdict(C){
+  var s=C.sure||[0,0],u=C.unsure||[0,0],g=C.guess||[0,0],pc=function(x){return x[0]?x[1]/x[0]:0},k,p;
+  if(s[0]>=8&&pc(s)<0.6){k='over';p=Math.round(100*pc(s))}
+  else if(g[0]>=8&&pc(g)>=0.6){k='under';p=Math.round(100*pc(g))}
+  else if(u[0]>=8&&pc(u)>=0.75){k='doubt';p=Math.round(100*pc(u))}
+  else if(s[0]>=8&&pc(s)>=0.88){k='good';p=Math.round(100*pc(s))}
+  else{k='few';p=0}
+  var r=pickR(CALR[k]);return [r[0],r[1].replace('{p}',p)];
+}
+function calibPanel(){
+  var C=lsJ('qeb-cal',{}),rows=[['sure','Sure'],['unsure','Unsure'],['guess','Guess']],tot=0;
+  rows.forEach(function(r){tot+=(C[r[0]]||[0,0])[0]});
+  var h='<div class="panel"><h3>Confidence check</h3>';
+  if(!tot)return h+'<div class="note">After each answer in Mixed study, tap Sure, Unsure or Guess. This panel then shows whether your confidence can be trusted.</div></div>';
+  rows.forEach(function(r){var x=C[r[0]]||[0,0],p=x[0]?Math.round(100*x[1]/x[0]):0;h+='<div class="cal"><span>'+r[1]+'</span><div><div class="calbar"><i style="width:'+p+'%"></i></div><div class="note" style="margin:2px 0 0">'+x[0]+' answer'+(x[0]===1?'':'s')+'</div></div><b>'+(x[0]?p+'%':'–')+'</b></div>'});
+  h+='<div class="note">Healthy: Sure above 85%, Guess near chance. If Sure is lower, you are overconfident.</div></div>'+remarkCard(calVerdict(C));
+  return h;
+}
+var GOALR=[['🍽','Daily goal done. Go eat something that is not coffee.'],['🎉','Goal reached. Your future self just sent a thank-you note.'],['🛋','Target hit. You are legally allowed to relax now.'],['💪','Goal done before dinner. Show-off behaviour, approved.']];
+var FCR=[['🃏','Deck finished. Your brain just did a push-up.'],['📚','All cards done. The flashcards are filing for unemployment.'],['✅','Every card seen. Now go forget them gloriously, then review again tomorrow.']];
+var MGR=['Memory champion. The hippocampus is blushing.','Solved. Now apply that focus to pharmacology.','Great recall. Please do the same with the Krebs cycle.'];
+/* ---------- plan, insights, weak-topic drill ---------- */
+function daysLeft(){if(!S.exam)return null;var L=Math.ceil((new Date(S.exam+'T00:00:00')-new Date(new Date().toDateString()))/864e5);return L>0?L:null}
+function goalNum(){
+  var L=daysLeft();if(L==null)return null;var U=0,D=0;
+  ACTIVE().forEach(function(b){var st=bstats(b);U+=Math.max(0,b.total-st.tried);D+=st.due});
+  var nd=L>14?L-7:L,goal=Math.ceil(U/Math.max(1,nd))+Math.ceil(Math.min(D,300)/Math.max(1,Math.min(L,14)));
+  if(U+D>0)goal=Math.max(10,goal);goal=Math.min(250,goal);
+  return{goal:goal,L:L,U:U,D:D};
+}
+function todayDone(){return (lsJ('qeb-log',{})[dayStr(0)]||{n:0}).n}
+function startPlan(){var g=goalNum();if(!g)return;var left=Math.max(10,Math.min(100,g.goal-todayDone()));
+  markDay();show('mixed');push();mxRun({banks:ACTIVE().map(function(b){return b.k}),src:'smart',n:left,mode:'practice'})}
+function refreshPlan(){
+  var el=$('plan-home'),g=goalNum();if(!g){el.innerHTML='';return}
+  var done=todayDone(),pct=Math.min(100,Math.round(100*done/g.goal));
+  var gr=done>=g.goal?GOALR[dayOfYear()%GOALR.length]:null;
+  el.innerHTML='<div class="panel"><h3>Today\'s goal</h3><div>'+done+' / '+g.goal+' questions · '+g.L+' day'+(g.L===1?'':'s')+' to exam</div>'+(gr?'<div class="note" style="font-style:italic">'+gr[0]+' '+esc(gr[1])+'</div>':'')+'<div class="goal"><i style="width:'+pct+'%"></i></div><button class="mini" id="plan-go">'+(done>=g.goal?'Goal reached. Keep going':'Start today\'s session')+'</button></div>';
+  $('plan-go').onclick=startPlan;
+}
+async function allData(){for(var i=0;i<BANKS.length;i++)await loadData(BANKS[i].k)}
+function topicStats(){
+  var out=[],now=Date.now();
+  ACTIVE().forEach(function(b){var P=lsJ(b.prefix+'-prog',{}),T={};
+    DATAC[b.k].forEach(function(q){if(!scorable(q))return;var t=q.topic||'(no topic)',o=T[t]||(T[t]={b:b.k,t:t,total:0,tried:0,ok:0,due:0}),p=P[hkey(q)];
+      o.total++;if(p){o.tried++;if(p.last==='ok')o.ok++;if(p.due<=now)o.due++}});
+    for(var t in T)out.push(T[t])});
+  return out;
+}
+function weakTopics(minTried){
+  return topicStats().filter(function(o){return o.tried>=(minTried||3)}).sort(function(a,b){var x=a.ok/a.tried,y=b.ok/b.tried;return x-y||b.due-a.due||b.tried-a.tried});
+}
+function drill(list){
+  var topics={},banks={};list.forEach(function(o){topics[o.b+'|'+o.t]=1;banks[o.b]=1});
+  markDay();show('mixed');push();mxRun({banks:Object.keys(banks),topics:topics,src:'smart',n:20,mode:'practice'});
+}
+async function homeDrill(){
+  toast('Finding your weakest topics…');
+  try{await allData()}catch(e){toast('Could not load the banks.');return}
+  var w=weakTopics(3).slice(0,3);
+  if(!w.length){toast('Answer a few more questions first (at least 3 in a topic).');return}
+  drill(w);
+}
+function chartAcc(){
+  var L=lsJ('qeb-log',{}),pts=[],any=false;
+  for(var i=7;i>=0;i--){var n=0,c=0;for(var d=i*7;d<i*7+7;d++){var o=L[dayStr(d)];if(o){n+=o.n;c+=o.c}}pts.push(n?Math.round(100*c/n):null);if(n)any=true}
+  if(!any)return '<div class="note">Your trend appears here once you have answered some questions. History starts from this version.</div>';
+  var W=340,H=130,x=function(i){return 28+i*(W-44)/7},y=function(v){return 14+(100-v)*1.0},path='',dots='',started=false;
+  pts.forEach(function(v,i){if(v==null)return;path+=(started?'L':'M')+x(i)+' '+y(v);started=true;dots+='<circle cx="'+x(i)+'" cy="'+y(v)+'" r="3.5" fill="var(--accent)"/><text x="'+x(i)+'" y="'+(y(v)-7)+'" font-size="10" text-anchor="middle" fill="currentColor">'+v+'</text>'});
+  var grid='';[0,50,100].forEach(function(v){grid+='<line x1="28" x2="'+(W-16)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--bd)"/><text x="4" y="'+(y(v)+3)+'" font-size="9" fill="currentColor">'+v+'%</text>'});
+  return '<svg class="ch" viewBox="0 0 '+W+' '+(H+16)+'">'+grid+'<path d="'+path+'" fill="none" stroke="var(--accent)" stroke-width="2.5"/>'+dots+'<text x="28" y="'+(H+12)+'" font-size="9" fill="currentColor">8 weeks ago</text><text x="'+(W-16)+'" y="'+(H+12)+'" font-size="9" text-anchor="end" fill="currentColor">this week</text></svg>';
+}
+function chartDaily(){
+  var L=lsJ('qeb-log',{}),v=[],mx=1;for(var i=13;i>=0;i--){var n=(L[dayStr(i)]||{n:0}).n;v.push(n);if(n>mx)mx=n}
+  var W=340,H=90,bw=(W-20)/14,h='';
+  v.forEach(function(n,i){var bh=Math.round(n/mx*(H-18));h+='<rect x="'+(10+i*bw+2)+'" y="'+(H-bh)+'" width="'+(bw-4)+'" height="'+bh+'" rx="3" fill="var(--accent)" opacity="'+(i===13?1:.6)+'"/>'+(n?'<text x="'+(10+i*bw+bw/2)+'" y="'+(H-bh-3)+'" font-size="9" text-anchor="middle" fill="currentColor">'+n+'</text>':'')});
+  return '<svg class="ch" viewBox="0 0 '+W+' '+(H+14)+'">'+h+'<text x="10" y="'+(H+11)+'" font-size="9" fill="currentColor">14 days ago</text><text x="'+(W-10)+'" y="'+(H+11)+'" font-size="9" text-anchor="end" fill="currentColor">today</text></svg>';
+}
+var WK=[];
+async function showInsights(){
+  $('ins').innerHTML='<div class="panel">Loading…</div>';
+  try{await allData()}catch(e){$('ins').innerHTML='<div class="panel">Could not load the banks.</div>';return}
+  var g=goalNum(),h='';
+  if(g){var done=todayDone(),pct=Math.min(100,Math.round(100*done/g.goal));
+    h+='<div class="panel"><h3>Study plan</h3><div><b>'+g.goal+'</b> questions a day to be ready in '+g.L+' day'+(g.L===1?'':'s')+'.</div><div class="goal"><i style="width:'+pct+'%"></i></div><div class="note">Today: '+done+' / '+g.goal+'. Still unseen: '+g.U+' · due for review: '+g.D+'. The plan finishes new questions a week before the exam and leaves that week for revision.</div><button class="mini" id="ins-plan" style="margin-top:8px">Start today\'s session</button></div>'}
+  else h+='<div class="panel"><h3>Study plan</h3><div class="note">Set your exam date in Settings to get a daily question goal.</div><button class="mini" id="ins-set" style="margin-top:8px">Open settings</button></div>';
+  h+='<div class="panel"><h3>Accuracy by week</h3>'+chartAcc()+'</div><div class="panel"><h3>Questions per day</h3>'+chartDaily()+'</div><div class="panel"><h3>Study days</h3>'+heatmap()+'</div>'+calibPanel()+sessionsPanel();
+  h+='<div class="panel"><h3>By subject</h3>';
+  ACTIVE().forEach(function(b){var st=bstats(b);h+='<div class="trow"><div class="tn">'+b.icon+' '+esc(b.name)+'<div class="tm">'+st.tried+' / '+b.total+' done'+(st.due?' · '+st.due+' due':'')+'</div></div><div>'+(st.acc!=null?st.acc+'%':'–')+'</div></div>'});
+  h+='</div>';
+  var lc=0;ACTIVE().forEach(function(b){var P=lsJ(b.prefix+'-prog',{});for(var k in P)if(P[k].l)lc++});
+  if(lc)h+='<div class="panel"><h3>Trouble questions</h3><div class="note" style="margin:0 0 8px">'+lc+' question'+(lc===1?'':'s')+' you have missed three or more times. They come back more often until they stick.</div><button class="mini" id="ins-leech">Drill them</button></div>';
+  WK=weakTopics(3).slice(0,10);
+  h+='<div class="panel"><h3>Weakest topics</h3>';
+  if(!WK.length)h+='<div class="note">Answer at least 3 questions in a topic and it will be ranked here.</div>';
+  else{h+='<button class="mini" id="ins-d3" style="margin-bottom:6px">🎯 Drill my 3 weakest</button>';
+    WK.forEach(function(o,i){h+='<div class="trow"><div class="tn">'+esc(o.t)+'<div class="tm">'+esc(NAMES[o.b])+' · '+o.ok+' / '+o.tried+' right ('+Math.round(100*o.ok/o.tried)+'%)'+(o.due?' · '+o.due+' due':'')+'</div></div><button class="mini" data-i="'+i+'">Drill</button></div>'})}
+  h+='</div>';
+  $('ins').innerHTML=h;
+  var a=$('ins-plan');if(a)a.onclick=startPlan;var c=$('ins-set');if(c)c.onclick=openSheet;
+  var lk=$('ins-leech');if(lk)lk.onclick=function(){markDay();show('mixed');push();mxRun({banks:ACTIVE().map(function(b){return b.k}),src:'leech',n:20,mode:'practice'})};
+  var d3=$('ins-d3');if(d3)d3.onclick=function(){drill(WK.slice(0,3))};
+  $('ins').querySelectorAll('button[data-i]').forEach(function(b){b.onclick=function(){drill([WK[+b.dataset.i]])}});
+}
+$('go-drill').addEventListener('click',homeDrill);
+
+/* ---------- review uncertain answer keys ---------- */
+var KQ=[],KLAST=null;
+async function showKeyReview(){
+  $('kr').innerHTML='<div class="panel">Loading…</div>';
+  try{await allData()}catch(e){$('kr').innerHTML='<div class="panel">Could not load the banks.</div>';return}
+  KQ=[];KLAST=null;
+  BANKS.forEach(function(b){DATAC[b.k].forEach(function(q){if(q.unc&&scorable(q)&&!KR[hkey(q)])KQ.push({b:b.k,q:q})})});
+  krRender();
+}
+function krRender(){
+  var done=Object.keys(KR).length,left=KQ.length,h='';
+  h+='<div class="panel"><h3>Review answer keys</h3><div class="note" style="margin:0">'+left+' left · '+done+' reviewed. Your choices change the answer key in this app, on this device only. Check a textbook before you decide.</div></div>';
+  if(!left){h+='<div class="panel" style="text-align:center"><div class="big2">✔</div><div>Nothing left to review.</div></div>'}
+  else{
+    var r=KQ[0],q=r.q,ms=[q.deepseek,q.gemini,q.gpt].filter(function(x){return x});
+    h+='<div class="panel"><div class="qh"><span>'+esc(NAMES[r.b])+(q.topic?' · '+esc(q.topic):'')+'</span><span>stored key: <b>'+esc(q.answer)+'</b></span></div><div class="qt">'+esc(q.question)+'</div>';
+    q.options.forEach(function(o){h+='<div class="opt'+(o.charAt(0)===q.answer?' right':'')+'" style="cursor:default">'+esc(o)+'</div>'});
+    if(ms.length)h+='<div class="note">Other sources said: '+ms.map(esc).join(', ')+'</div>';
+    h+=explHtml(q).replace(/<div class="expl warn">.*?<\/div>/,'');
+    h+='<div class="conf" style="margin-top:12px">Which option is correct?</div><div class="conf">';
+    q.options.forEach(function(o){var L=o.charAt(0);h+='<button data-l="'+esc(L)+'">'+(L===q.answer?'✔ Key is right ('+esc(L)+')':'Key is '+esc(L))+'</button>'});
+    h+='</div><div class="nav"><button class="ib" id="kr-skip">Skip for now</button>'+(KLAST?'<button class="ib" id="kr-undo">Undo last</button>':'')+'</div></div>';
+  }
+  $('kr').innerHTML=h;
+  $('kr').querySelectorAll('.conf button[data-l]').forEach(function(b){b.onclick=function(){krDecide(b.dataset.l)}});
+  var sk=$('kr-skip');if(sk)sk.onclick=function(){KQ.push(KQ.shift());krRender();screens.keyrev.scrollTop=0};
+  var un=$('kr-undo');if(un)un.onclick=krUndo;
+}
+function krDecide(L){
+  var r=KQ.shift(),q=r.q,k=hkey(q);KLAST={r:r,ans:q.answer,had:KR[k]};
+  if(L===q.answer)KR[k]={s:'ok',t:Date.now()};else{KR[k]={s:'change',l:L,from:q.answer,t:Date.now()};q.answer=L}
+  q.unc=0;krSave();krRender();screens.keyrev.scrollTop=0;
+}
+function krSave(){lsS('qeb-keyrev',KR)}
+function krUndo(){
+  if(!KLAST)return;var q=KLAST.r.q,k=hkey(q);q.answer=KLAST.ans;q.unc=1;delete KR[k];krSave();KQ.unshift(KLAST.r);KLAST=null;krRender();
+}
+$('go-kr').addEventListener('click',function(){show('keyrev');push();showKeyReview()});
+
+/* ---------- take a break ---------- */
+var JOKES=[
+["Why do doctors carry a red pen?","In case they need to draw blood."],
+["Which bone makes you laugh?","The humerus."],
+["What do you call a doctor who fixes websites?","A URLologist."],
+["Why did the med student bring a ladder to the exam?","The questions were high-yield."],
+["How many internists does it take to change a light bulb?","None. They will order a consult, repeat the labs and reassess in 24 hours."],
+["How many surgeons does it take to change a light bulb?","Just one. The procedure is quick. The documentation takes longer."],
+["I told my study group a joke about the circulatory system.","It went straight to the heart."],
+["Why did the cell go to therapy?","It had too many issues with its membrane."],
+["What is a med student's favourite kind of coffee?","Whatever is still warm."],
+["Why couldn't the pharmacology student sleep?","Too many side effects from the revision."],
+["Why did the pediatrician stay calm during the exam?","He had dealt with tougher crowds."],
+["What is a medical student's favourite phrase?","\"It depends.\" It is correct about 90% of the time."],
+["Why do public health students win every debate?","They bring the numbers and a confidence interval."],
+["Why did the OB-GYN student love the question bank?","Everything was delivered on time."],
+["I asked my brain for the answer during the mock exam.","It replied: \"Loading... please enjoy this song from 2011.\""],
+["My study plan has three steps.","Open the book. Look at the book. Open the phone instead."],
+["Why did the statistician bring a bell curve to the exam?","To make sure most people ended up in the middle."],
+["What do you call a bacterium that studies hard?","A cultured individual."],
+["When is the best time to study for the exam?","Yesterday. The second best time is right after this break."],
+["Why did the skeleton stay home from the exam?","He had no body to go with."],
+["Why was the anatomy student never lost?","He always knew where the landmarks were."],
+["What did the mitochondria say on Monday morning?","\"I am the powerhouse, and I need a coffee.\""]
+];
+var MEMES=[
+["Me: I will study 8 hours today","Also me: reorganises the desk for 3 hours","🗂️"],
+["The question: which is NOT a feature of...","Me: they are all features","🤔"],
+["Exam in three weeks","My brain: remember every song lyric from 2009","🎵"],
+["Reading the same page for the fifth time","The page: still brand new to me","📖"],
+["11 pm: just one last question","2 am: why is this topic like this","🌙"],
+["All options are partly correct","Pick the MOST correct one","😵"],
+["Guessing on a question","Confidence: 100%","😎"],
+["After one hour of study","Time for a short five-hour break","🛋️"],
+["Finally remembered the mnemonic","Forgot what it stood for","🧠"],
+["Pediatrics: dose per kg","Me: which kg?","⚖️"],
+["Surgery: describe the anatomy","Me: it is near the other thing","🔪"],
+["Internal medicine: it is lupus","Also internal medicine: it is not lupus","🩺"],
+["OB-GYN: the safest option for mother and baby","Me: so obviously not the one I picked","🤰"],
+["Public health: define epidemic","Me: a lot of people at once?","🌍"],
+["Is it Monday or did I just drink coffee?","Yes","☕"],
+["Highlighting the whole page","Technically it all matters","🖍️"],
+["My study plan","Reality","📅"],
+["Me after finishing a hard block","Also me: eats like I just ran a marathon","🍕"]
+];
+var CALM=[
+["Almost everything will work again if you unplug it for a few minutes, including you.","Anne Lamott"],
+["Rest is not idleness, and to lie sometimes on the grass under trees on a summer's day... is by no means a waste of time.","John Lubbock"],
+["Take rest; a field that has rested gives a bountiful crop.","Ovid"],
+["Nature does not hurry, yet everything is accomplished.","attributed to Lao Tzu"],
+["Even the heart pauses between beats. Rest is built into everything that works.",""],
+["Unclench your jaw. Drop your shoulders. The question bank will wait.",""],
+["A calm mind remembers more than a tense one.",""],
+["Look away from the screen. Find something far away and let your eyes rest on it.",""],
+["Drink some water. Your brain is mostly made of it.",""],
+["Nothing needs solving in the next five minutes.",""],
+["You have done enough for this hour. Let it be enough.",""],
+["Stretch your neck, roll your wrists, take one slow breath. Then decide what is next.",""],
+["The words will still be on the page after your break, and you will read them better.",""]
+];
+var PAL=[["#0f4c5c","#2a9d8f"],["#b8501f","#f2a65a"],["#4a3f8f","#9a8bd6"],["#1f6f50","#7ccf9e"],["#8f2d56","#e58aa9"],["#274c77","#6096ba"]];
+var BK={vol:0.25,snd:'',tab:'jokes',ji:0,mi:0,ci:0,show:false,end:0,tm:null,breathing:false,bt:null,minutes:5,JO:[],MO:[],CO:[]};
+function idxOrder(n){var a=[];for(var i=0;i<n;i++)a.push(i);return shuffle(a)}
+function stopBreath(){BK.breathing=false;clearTimeout(BK.bt)}
+function brOpen(){FACTI=idxOrder(FACTS.length);BK.fi=0;BK.JO=idxOrder(JOKES.length);BK.MO=idxOrder(MEMES.length);BK.CO=idxOrder(CALM.length);BK.ji=BK.mi=BK.ci=0;BK.show=false;BK.tab='jokes';stopBreath();brRender()}
+function fmt(ms){var t=Math.max(0,Math.round(ms/1000));return Math.floor(t/60)+':'+('0'+t%60).slice(-2)}
+function wrapText(x,t,maxW){var w=t.split(' '),lines=[],cur='';w.forEach(function(wd){var tryL=cur?cur+' '+wd:wd;if(x.measureText(tryL).width>maxW&&cur){lines.push(cur);cur=wd}else cur=tryL});if(cur)lines.push(cur);return lines}
+function drawMeme(c,m,pi){
+  var W=720,H=720;c.width=W;c.height=H;var x=c.getContext('2d'),p=PAL[pi%PAL.length],g=x.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,p[0]);g.addColorStop(1,p[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.textAlign='center';x.textBaseline='middle';x.font='260px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';x.fillText(m[2],W/2,H/2);
+  x.font='bold 50px Impact,"Arial Black",sans-serif';x.lineJoin='round';x.lineWidth=9;x.strokeStyle='#000';x.fillStyle='#fff';
+  var draw=function(t,y0,dir){var L=wrapText(x,t.toUpperCase(),W-70),lh=58,start=dir>0?y0:y0-(L.length-1)*lh;L.forEach(function(l,i){var y=start+i*lh;x.strokeText(l,W/2,y);x.fillText(l,W/2,y)})};
+  draw(m[0],62,1);draw(m[1],H-62,-1);
+}
+async function shareMeme(){
+  var c=$('mcv');if(!c)return;var P=window.Capacitor&&Capacitor.Plugins;
+  if(native&&P&&P.Filesystem&&P.Share){try{var b64=c.toDataURL('image/png').split(',')[1],r=await P.Filesystem.writeFile({path:'meme.png',data:b64,directory:'CACHE'});await P.Share.share({url:r.uri,dialogTitle:'Share this meme'});return}catch(e){if(/cancel|dismiss/i.test(String(e&&e.message||e)))return}}
+  c.toBlob(async function(bl){try{var f=new File([bl],'meme.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}}catch(e){if(e&&e.name==='AbortError')return}
+    var a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='meme.png';a.click();toast('Meme saved.')});
+}
+
+var FACTS=[
+"Your heart beats roughly 100,000 times a day, and it never takes a day off.",
+"Babies are born with around 300 bones. Many fuse together as they grow, leaving 206 in most adults.",
+"The smallest bone in the body is the stapes, deep inside the middle ear. The femur is the longest and strongest.",
+"Red blood cells live for about 120 days before the spleen and liver recycle them.",
+"The skin is the largest organ of the body.",
+"The cornea has no blood vessels. It gets its oxygen straight from the air and from tears.",
+"Your brain is about two percent of your body weight but uses roughly twenty percent of your resting energy.",
+"The liver can regrow after part of it is removed. Few organs can do that.",
+"You blink about 15 to 20 times a minute, which is thousands of times a day.",
+"Fingernails grow faster than toenails.",
+"The lining of your stomach renews itself every few days so the acid does not digest it.",
+"Any two people share about 99.9 percent of their DNA.",
+"The word quarantine comes from the Italian for forty days.",
+"René Laennec invented the stethoscope in 1816, starting with a rolled-up sheet of paper.",
+"Alexander Fleming noticed penicillin in 1928 when a mould contaminated one of his culture plates.",
+"A newborn's kneecaps are mostly cartilage. They turn into bone over the first few years of life.",
+"Taste buds are replaced every week or two, which is why a burnt tongue heals so quickly.",
+"The adult human body is roughly 60 percent water."
+];
+var STRETCH=[
+["Neck rolls","Drop your chin toward your chest, then slowly tilt one ear toward your shoulder, then the other. Keep your shoulders loose.",30],
+["Shoulder shrugs","Lift both shoulders up to your ears, hold for three seconds, then let them drop. Repeat slowly.",30],
+["Wrist and finger stretch","Hold one arm out, palm up. Gently pull the fingers back with the other hand. Switch sides.",30],
+["Seated twist","Sit tall, turn your upper body to one side and hold the back of the chair. Breathe, then switch.",30],
+["Stand and reach","Stand up, interlace your fingers, reach overhead and lean gently left and right.",30],
+["Eye rest (20-20-20)","Look at something about six metres, or twenty feet, away for twenty seconds.",20]
+];
+var FACTI=[],AC=null,SND={src:null,gain:null,lfo:null},MG=null;
+function noiseBuf(ctx,type){var len=ctx.sampleRate*3,b=ctx.createBuffer(1,len,ctx.sampleRate),d=b.getChannelData(0),last=0;for(var i=0;i<len;i++){var w=Math.random()*2-1;if(type==='brown'){last=(last+0.02*w)/1.02;d[i]=last*3.5}else d[i]=w*0.5}return b}
+function stopSound(){try{SND.src&&SND.src.stop()}catch(e){}try{SND.lfo&&SND.lfo.stop()}catch(e){}SND.src=SND.lfo=SND.gain=null;BK.snd=''}
+function startSound(kind){
+  stopSound();var A=window.AudioContext||window.webkitAudioContext;if(!A){toast('Sound is not available here.');return}
+  try{if(!AC)AC=new A();if(AC.resume)AC.resume();
+    var src=AC.createBufferSource();src.buffer=noiseBuf(AC,kind==='rain'?'white':'brown');src.loop=true;
+    var g=AC.createGain();g.gain.value=BK.vol;
+    if(kind==='rain'){var hp=AC.createBiquadFilter();hp.type='highpass';hp.frequency.value=900;var lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=7000;src.connect(hp);hp.connect(lp);lp.connect(g)}
+    else if(kind==='ocean'){var lfo=AC.createOscillator(),lg=AC.createGain();lfo.frequency.value=0.09;lg.gain.value=BK.vol*0.8;lfo.connect(lg);lg.connect(g.gain);src.connect(g);lfo.start();SND.lfo=lfo}
+    else src.connect(g);
+    g.connect(AC.destination);src.start();SND.src=src;SND.gain=g;BK.snd=kind;
+  }catch(e){toast('Could not start the sound.')}
+}
+function mgNew(){var E=['🫀','🫁','🧠','🦴','🦷','👁️','🩸','💊'],a=shuffle(E.concat(E));MG={c:a,open:[],done:{},moves:0,lock:false}}
+function mgRender(){
+  var h='<div class="note" style="text-align:center;margin-top:0">Match the pairs. Moves: '+MG.moves+'</div><div class="mgrid">';
+  MG.c.forEach(function(e,i){var up=MG.open.indexOf(i)>=0||MG.done[i];h+='<button class="mcard'+(MG.done[i]?' done':up?' up':'')+'" data-i="'+i+'">'+(up?e:'')+'</button>'});
+  h+='</div>';if(Object.keys(MG.done).length===16)h+='<div class="note" style="text-align:center"><b>Well done! Solved in '+MG.moves+' moves.</b></div>';
+  h+='<div class="nav"><button class="ib" id="mg-new">New game</button></div>';return h;
+}
+function mgTap(i){
+  if(MG.lock||MG.done[i]||MG.open.indexOf(i)>=0)return;MG.open.push(i);
+  if(MG.open.length===2){MG.moves++;var a=MG.open[0],b=MG.open[1];
+    if(MG.c[a]===MG.c[b]){MG.done[a]=MG.done[b]=1;MG.open=[];if(Object.keys(MG.done).length===16){setTimeout(celebrate,200);toast(pickR(MGR))}}
+    else{MG.lock=true;brRender();setTimeout(function(){MG.open=[];MG.lock=false;if(view==='breakr'&&BK.tab==='play')brRender()},800);return}}
+  brRender();
+}
+function stretchTimer(btn,sec,i){
+  if(btn.dataset.run)return;btn.dataset.run=1;var left=sec;btn.textContent=left+'s';
+  var t=setInterval(function(){left--;if(view!=='breakr'||!document.body.contains(btn)){clearInterval(t);return}
+    if(left<=0){clearInterval(t);btn.textContent='Done ✔';btn.dataset.run='';try{navigator.vibrate&&navigator.vibrate(120)}catch(e){}}else btn.textContent=left+'s'},1000);
+}
+function brRender(){
+  var h='<div class="panel"><h3>Take a break</h3><div class="note" style="margin:0">Your brain files what you studied while you rest. Five minutes is enough.</div>'
+   +'<div class="row" style="margin-top:8px"><div class="bkclock" id="bk-clock">'+(BK.end>Date.now()?fmt(BK.end-Date.now()):'')+'</div><span><select id="bk-min">'+[5,10,15].map(function(m){return '<option'+(m===BK.minutes?' selected':'')+'>'+m+'</option>'}).join('')+'</select> min <button class="mini" id="bk-go">'+(BK.end>Date.now()?'Stop':'Start timer')+'</button></span></div></div>'
+   +'<div class="tabs"><div class="seg" id="bk-tabs"><button data-v="jokes"'+(BK.tab==='jokes'?' class="on"':'')+'>😄 Jokes</button><button data-v="memes"'+(BK.tab==='memes'?' class="on"':'')+'>🖼 Memes</button><button data-v="facts"'+(BK.tab==='facts'?' class="on"':'')+'>💡 Facts</button><button data-v="calm"'+(BK.tab==='calm'?' class="on"':'')+'>🌿 Calm</button><button data-v="play"'+(BK.tab==='play'?' class="on"':'')+'>🧩 Play</button><button data-v="move"'+(BK.tab==='move'?' class="on"':'')+'>🧘 Move</button></div></div>';
+  if(BK.tab==='jokes'){var j=JOKES[BK.JO[BK.ji%BK.JO.length]];
+    h+='<div class="panel"><div class="joke">'+esc(j[0])+(BK.show?'<div class="pu">'+esc(j[1])+'</div>':'')+'</div><div class="nav">'+(BK.show?'':'<button class="ib p" id="bk-rev">Tell me</button>')+'<button class="ib" id="bk-next">Next joke</button></div></div>'}
+  else if(BK.tab==='memes'){h+='<div class="panel"><canvas class="mcanvas" id="mcv"></canvas><div class="nav"><button class="ib" id="bk-next">Next meme</button><button class="ib p" id="bk-share">Share</button></div></div>'}
+  else if(BK.tab==='facts'){h+='<div class="panel"><div class="joke">'+esc(FACTS[FACTI[BK.fi%FACTI.length]])+'</div><div class="nav"><button class="ib" id="bk-next">Another fact</button></div></div>'}
+  else if(BK.tab==='play'){if(!MG)mgNew();h+='<div class="panel"><h3>Memory match</h3>'+mgRender()+'</div>'}
+  else if(BK.tab==='move'){h+='<div class="panel"><h3>Stretch and rest your eyes</h3>'+STRETCH.map(function(x,i){return '<div class="stretch"><b>'+esc(x[0])+'</b><p>'+esc(x[1])+'</p><button class="mini" data-s="'+i+'">Start '+x[2]+'s</button></div>'}).join('')+'</div>'}
+  else{var q=CALM[BK.CO[BK.ci%BK.CO.length]];
+    h+='<div class="panel"><div class="breath"><div class="orb" id="orb">'+(BK.breathing?'':'Breathe')+'</div></div><div class="nav"><button class="ib p" id="bk-breath">'+(BK.breathing?'Stop':'Start breathing')+'</button></div><div class="note" style="text-align:center">In for 4, hold for 2, out for 6.</div></div>'
+     +'<div class="panel"><h3>Soft sounds</h3><div class="snds">'+[['rain','🌧 Rain'],['brown','🌫 Deep hum'],['ocean','🌊 Waves']].map(function(x){return '<button data-snd="'+x[0]+'"'+(BK.snd===x[0]?' class="on"':'')+'>'+x[1]+'</button>'}).join('')+'</div><div class="row"><span>Volume</span><input type="range" id="snd-vol" min="0.05" max="0.6" step="0.01" value="'+BK.vol+'" style="flex:1"></div>'+(BK.snd?'<div class="nav"><button class="ib" id="snd-stop">Stop sound</button></div>':'')+'<div class="note">Generated on your phone, so it works offline.</div></div>'
+     +'<div class="quote resq" style="cursor:default"><p>'+esc(q[0])+'</p>'+(q[1]?'<small>— <b>'+esc(q[1])+'</b></small>':'')+'</div><div class="nav"><button class="ib" id="bk-next">Another thought</button></div>'}
+  $('brk').innerHTML=h;
+  $('bk-tabs').addEventListener('click',function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;stopBreath();BK.tab=v;BK.show=false;brRender()});
+  $('bk-min').addEventListener('change',function(){BK.minutes=parseInt(this.value,10)});
+  $('bk-go').addEventListener('click',function(){if(BK.end>Date.now()){BK.end=0;clearInterval(BK.tm);brRender();return}BK.end=Date.now()+BK.minutes*6e4;clearInterval(BK.tm);BK.tm=setInterval(bkTick,1000);brRender()});
+  var nx=$('bk-next');if(nx)nx.addEventListener('click',function(){if(BK.tab==='jokes'){BK.ji++;BK.show=false}else if(BK.tab==='memes')BK.mi++;else if(BK.tab==='facts')BK.fi++;else BK.ci++;brRender()});
+  $('brk').querySelectorAll('.mcard').forEach(function(b){b.onclick=function(){mgTap(+b.dataset.i)}});
+  var mn=$('mg-new');if(mn)mn.onclick=function(){mgNew();brRender()};
+  $('brk').querySelectorAll('button[data-s]').forEach(function(b){b.onclick=function(){stretchTimer(b,STRETCH[+b.dataset.s][2],+b.dataset.s)}});
+  $('brk').querySelectorAll('button[data-snd]').forEach(function(b){b.onclick=function(){if(BK.snd===b.dataset.snd)stopSound();else startSound(b.dataset.snd);brRender()}});
+  var sv=$('snd-vol');if(sv)sv.oninput=function(){BK.vol=parseFloat(this.value);if(SND.gain)SND.gain.gain.value=BK.vol};
+  var ss=$('snd-stop');if(ss)ss.onclick=function(){stopSound();brRender()};
+  var rv=$('bk-rev');if(rv)rv.addEventListener('click',function(){BK.show=true;brRender()});
+  var sh=$('bk-share');if(sh)sh.addEventListener('click',shareMeme);
+  var cv=$('mcv');if(cv){var i=BK.MO[BK.mi%BK.MO.length];drawMeme(cv,MEMES[i],i)}
+  var bb=$('bk-breath');if(bb)bb.addEventListener('click',function(){if(BK.breathing){stopBreath();brRender()}else{BK.breathing=true;brRender();breathStep(0)}});
+  if(BK.breathing&&BK.tab==='calm')breathStep(BK.phase||0,true);
+}
+function breathStep(ph,resume){
+  var o=$('orb');if(!o||!BK.breathing||view!=='breakr')return;BK.phase=ph;
+  var P=[['Breathe in',1.55,4000],['Hold',1.55,2000],['Breathe out',1,6000]][ph%3];
+  o.textContent=P[0];o.style.transitionDuration=(P[2]/1000)+'s';o.style.transform='scale('+P[1]+')';
+  clearTimeout(BK.bt);BK.bt=setTimeout(function(){breathStep(ph+1)},P[2]);
+}
+function bkTick(){
+  var el=$('bk-clock');
+  if(BK.end&&BK.end<=Date.now()){clearInterval(BK.tm);BK.end=0;try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}toast('Break over. Ready for ten questions?');if(view==='breakr')brRender();return}
+  if(el&&BK.end)el.textContent=fmt(BK.end-Date.now());
+}
+
+/* ---------- study calendar & session history ---------- */
+function heatmap(){
+  var L=lsJ('qeb-log',{}),dow=new Date().getDay(),cs=18,gap=3,W=12*(cs+gap)+4,H=7*(cs+gap)+4,h='';
+  for(var c=0;c<12;c++)for(var r=0;r<7;r++){var off=(11-c)*7+(dow-r);if(off<0)continue;var n=(L[dayStr(off)]||{n:0}).n,op=n===0?0:n<10?.3:n<30?.6:1;
+    h+='<rect x="'+(2+c*(cs+gap))+'" y="'+(2+r*(cs+gap))+'" width="'+cs+'" height="'+cs+'" rx="4" fill="'+(n?'var(--accent)':'var(--bd)')+'" opacity="'+(n?op:.55)+'"/>'}
+  return '<svg class="ch" viewBox="0 0 '+W+' '+H+'" style="max-width:320px;margin:0 auto">'+h+'</svg><div class="note" style="text-align:center">Last 12 weeks. Darker means more questions that day.</div>';
+}
+function sessionsPanel(){
+  var ss=lsJ('qeb-sessions',[]).slice(-8).reverse();
+  if(!ss.length)return '';
+  var h='<div class="panel"><h3>Recent sessions</h3>';
+  ss.forEach(function(x){var d=new Date(x.t);h+='<div class="trow"><div class="tn">'+d.toLocaleDateString(undefined,{day:'numeric',month:'short'})+' · '+(x.m==='exam'?'Timed exam':'Practice')+'<div class="tm">'+(x.b||[]).map(function(k){return esc(NAMES[k]||k)}).join(', ')+'</div></div><div><b>'+x.c+' / '+x.n+'</b> <span class="tm">'+Math.round(100*x.c/x.n)+'%</span></div></div>'});
+  return h+'</div>';
+}
+/* ---------- flashcards ---------- */
+var FC=null;
+function fcSetup(){
+  FC={stage:'setup'};
+  $('fc').innerHTML='<div class="panel"><h3>Flashcards</h3><div class="note" style="margin:0 0 8px">Turn your own list into quick cards. Read the question, say your answer out loud, then flip the card.</div>'
+   +'<div class="row"><span>Cards from</span><select id="fc-src"><option value="wrong">Questions I got wrong</option><option value="flagged">Questions I flagged</option><option value="notes">Questions with my notes</option><option value="due">Due for review</option></select></div></div><button class="big" style="width:100%" id="fc-go">Make my deck</button>';
+  $('fc-go').onclick=fcStart;
+}
+async function fcStart(){
+  var src=$('fc-src').value;toast('Making your deck…');
+  try{await allData()}catch(e){toast('Could not load the banks.');return}
+  var deck=[],now=Date.now();
+  BANKS.forEach(function(b){var P=lsJ(b.prefix+'-prog',{}),F=lsJ(b.prefix+'-flags',{}),N=lsJ(b.prefix+'-notes',{});
+    DATAC[b.k].forEach(function(q){if(!scorable(q))return;var k=hkey(q),p=P[k],ok=false;
+      if(src==='wrong')ok=!!p&&p.last==='bad';else if(src==='flagged')ok=!!F[k];else if(src==='notes')ok=!!(N[k]&&String(N[k]).trim());else ok=!!p&&p.due<=now;
+      if(ok)deck.push({b:b.k,q:q,note:typeof N[k]==='string'?N[k]:''})})});
+  if(!deck.length){toast('Nothing to show yet. Try another list.');return}
+  deck=shuffle(deck).slice(0,60);FC={stage:'deck',deck:deck,total:deck.length,show:false,got:0};fcRender();
+}
+function fcRender(){
+  if(!FC.deck.length){$('fc').innerHTML='<div class="panel" style="text-align:center"><div class="big2">✔</div><div>Deck finished. You went through '+FC.total+' cards.</div></div>'+remarkCard(pickR(FCR))+quoteCard()+'<div class="actions"><button class="big" id="fc-new">New deck</button><button class="big alt" id="fc-home">Home</button></div>';
+    $('fc-new').onclick=fcSetup;$('fc-home').onclick=goHome;return}
+  var c=FC.deck[0],q=c.q,ans=(q.options.filter(function(o){return o.charAt(0)===q.answer})[0])||q.answer;
+  var h='<div class="panel"><div class="qh"><span>'+esc(NAMES[c.b])+(q.topic?' · '+esc(q.topic):'')+'</span><span>'+FC.deck.length+' left</span></div><div class="qt">'+esc(q.question)+'</div>';
+  if(!FC.show)h+='<button class="big" style="width:100%" id="fc-flip">Show answer</button>';
+  else{h+='<div class="opt right" style="cursor:default">'+esc(ans)+'</div>';
+    if(q.core)h+='<div class="expl"><b>Key point</b>\n'+esc(q.core)+'</div>';
+    if(c.note)h+='<div class="expl"><b>My note</b>\n'+esc(c.note)+'</div>';
+    h+='<div class="nav"><button class="ib" id="fc-again">Again</button><button class="ib p" id="fc-got">Got it</button></div>'}
+  $('fc').innerHTML=h+'</div>';
+  var f=$('fc-flip');if(f)f.onclick=function(){FC.show=true;fcRender()};
+  var a=$('fc-again');if(a)a.onclick=function(){FC.deck.push(FC.deck.shift());FC.show=false;fcRender()};
+  var g=$('fc-got');if(g)g.onclick=function(){FC.deck.shift();FC.show=false;fcRender()};
+}
+$('go-fc').addEventListener('click',function(){markDay();show('flash');push();fcSetup()});
+$('go-flag').addEventListener('click',function(){
+  var total=0;BANKS.forEach(function(b){total+=Object.keys(lsJ(b.prefix+'-flags',{})).length});
+  if(!total){toast('You have not flagged any questions yet. Flag them inside a bank.');return}
+  markDay();show('mixed');push();mxRun({banks:ACTIVE().map(function(b){return b.k}),src:'flagged',n:30,mode:'practice'});
+});
+
+/* ---------- exam simulator ---------- */
+function simSetup(){
+  MX={stage:'setup',sim:1};stopTimer();
+  var h='<div class="panel"><h3>Exam simulator</h3><div class="note" style="margin:0 0 8px">A realistic sitting. Questions come in sections, one per subject, each with its own timer. You see no answers or explanations until the end. Once you submit a section you cannot return to it.</div>';
+  LIVE().forEach(function(b){h+='<label class="lbl"><input type="checkbox" class="sim-b" value="'+b.k+'"'+(ACTIVE().indexOf(b)>=0?' checked':'')+'> '+b.icon+' '+esc(b.name)+'</label>'});
+  h+='</div><div class="panel"><div class="row"><span>Total questions</span><select id="sim-n"><option>20</option><option>50</option><option selected>100</option><option>150</option><option>200</option></select></div>'
+   +'<div class="row"><span>Minutes per question</span><select id="sim-mpq"><option>1</option><option selected>1.2</option><option>1.5</option></select></div>'
+   +'<label class="lbl"><input type="checkbox" id="sim-new" checked> Prefer questions I have not seen</label></div>'
+   +'<button class="big" style="width:100%" id="sim-go">Begin exam</button>';
+  $('mx').innerHTML=h;$('sim-go').onclick=simStart;
+}
+async function simStart(){
+  var banks=[].slice.call(document.querySelectorAll('.sim-b')).filter(function(c){return c.checked}).map(function(c){return c.value});
+  if(!banks.length){toast('Tick at least one subject.');return}
+  var N=parseInt($('sim-n').value,10),mpq=parseFloat($('sim-mpq').value),pref=$('sim-new').checked;
+  toast('Preparing your exam…');
+  syncMine();var tot=0;banks.forEach(function(k){tot+=BY[k].total});
+  var cnt=banks.map(function(k){return Math.max(1,Math.round(N*BY[k].total/tot))}),sum=cnt.reduce(function(a,b){return a+b},0);
+  while(sum>N){var mi=cnt.indexOf(Math.max.apply(null,cnt));if(cnt[mi]<=1)break;cnt[mi]--;sum--}
+  while(sum<N){var ma=cnt.indexOf(Math.max.apply(null,cnt));cnt[ma]++;sum++}
+  var items=[],secs=[];
+  try{for(var i=0;i<banks.length;i++){var k=banks[i],D=await loadData(k),P=lsJ(PFX[k]+'-prog',{}),un=[],se=[];
+    D.forEach(function(q){if(!scorable(q))return;(P[hkey(q)]?se:un).push({q:q,b:k})});
+    var list=pref?shuffle(un).concat(shuffle(se)):shuffle(un.concat(se));list=shuffle(list.slice(0,cnt[i]));
+    if(!list.length)continue;
+    secs.push({k:k,start:items.length,end:items.length+list.length-1,n:list.length,mins:Math.max(1,Math.ceil(list.length*mpq)),deadline:0});
+    items=items.concat(list)}}
+  catch(e){toast('Could not load the banks.');return}
+  if(!items.length){toast('No questions available.');return}
+  markDay();
+  MX={stage:'quiz',sim:1,mode:'exam',items:items,i:0,ans:{},rec:{},conf:{},flag:{},secs:secs,si:0,state:'intro',done:false,end:0};
+  MX.i=secs[0].start;simRender();
+}
+function simRender(){
+  var sec=MX.secs[MX.si],h='',b=BY[sec.k];
+  if(MX.state==='intro'){
+    h='<div class="panel" style="text-align:center"><div class="qh" style="justify-content:center">Section '+(MX.si+1)+' of '+MX.secs.length+'</div><div style="font-size:40px">'+b.icon+'</div><h3 style="font-size:24px">'+esc(b.name)+'</h3><div>'+sec.n+' questions · '+sec.mins+' minutes</div><div class="note">The timer starts when you tap Start. No feedback until the exam ends, and you cannot come back to this section after you submit it.</div><button class="big" id="sim-start" style="width:100%;margin-top:12px">Start section</button></div>';
+    $('mx').innerHTML=h;$('sim-start').onclick=function(){sec.deadline=Date.now()+sec.mins*6e4;MX.state='q';stopTimer();timer=setInterval(simTick,1000);simRender()};return;
+  }
+  var local=MX.i-sec.start+1;
+  if(MX.state==='review'){
+    var a=0,f=0;for(var i=sec.start;i<=sec.end;i++){if(MX.ans[i])a++;if(MX.flag[i])f++}
+    h='<div class="panel"><div class="qh"><span>Review · '+esc(b.name)+'</span><span class="simclock" id="sim-clock"></span></div><div class="note" style="margin:0">Answered '+a+' of '+sec.n+' · flagged '+f+' · unanswered '+(sec.n-a)+'</div><div class="rgrid">';
+    for(var j=sec.start;j<=sec.end;j++)h+='<button class="rb'+(MX.ans[j]?' ans':'')+(MX.flag[j]?' flg':'')+'" data-j="'+j+'">'+(j-sec.start+1)+'</button>';
+    h+='</div><div class="legend"><span>■ answered</span><span>□ unanswered</span><span>⚑ flagged</span></div></div><div class="nav"><button class="ib" id="sim-back">Back to questions</button><button class="ib p" id="sim-submit">'+(MX.si===MX.secs.length-1?'Submit exam':'Submit section')+'</button></div>';
+    $('mx').innerHTML=h;
+    $('mx').querySelectorAll('.rb').forEach(function(x){x.onclick=function(){MX.i=+x.dataset.j;MX.state='q';simRender()}});
+    $('sim-back').onclick=function(){MX.state='q';simRender()};
+    $('sim-submit').onclick=function(){var u=sec.n-a;if(!confirm((u?u+' question'+(u===1?' is':'s are')+' unanswered. ':'')+'Submit '+(MX.si===MX.secs.length-1?'the exam':'this section')+'? You cannot return to it.'))return;simSubmit(false)};
+    simTick();return;
+  }
+  var r=MX.items[MX.i],q=r.q,L=MX.ans[MX.i];
+  h='<div class="panel"><div class="qh"><span>'+esc(b.name)+' · Q '+local+' / '+sec.n+'</span><span class="simclock" id="sim-clock"></span></div><div class="qt">'+esc(q.question)+'</div>';
+  q.options.forEach(function(o){var l=o.charAt(0);h+='<button class="opt'+(l===L?' sel':'')+'" data-l="'+esc(l)+'">'+esc(o)+'</button>'});
+  h+='</div><div class="nav"><button class="ib" id="sim-prev"'+(MX.i>sec.start?'':' disabled')+'>← Prev</button><button class="ib'+(MX.flag[MX.i]?' p':'')+'" id="sim-flag">⚑ '+(MX.flag[MX.i]?'Flagged':'Flag')+'</button><button class="ib" id="sim-next"'+(MX.i<sec.end?'':' disabled')+'>Next →</button></div><button class="big" style="width:100%" id="sim-rev">Review and submit</button><div class="note" style="text-align:center">Tap a selected answer again to clear it.</div>';
+  $('mx').innerHTML=h;
+  $('mx').querySelectorAll('.opt').forEach(function(x){x.onclick=function(){var l=x.dataset.l;if(MX.ans[MX.i]===l)delete MX.ans[MX.i];else MX.ans[MX.i]=l;simRender()}});
+  $('sim-prev').onclick=function(){MX.i--;simRender();screens.mixed.scrollTop=0};
+  $('sim-next').onclick=function(){MX.i++;simRender();screens.mixed.scrollTop=0};
+  $('sim-flag').onclick=function(){if(MX.flag[MX.i])delete MX.flag[MX.i];else MX.flag[MX.i]=1;simRender()};
+  $('sim-rev').onclick=function(){MX.state='review';simRender();screens.mixed.scrollTop=0};
+  simTick();
+}
+function simTick(){
+  if(!MX||!MX.sim||MX.stage!=='quiz'||MX.done||MX.state==='intro')return;
+  var sec=MX.secs[MX.si],left=sec.deadline-Date.now(),el=$('sim-clock');
+  if(el){el.textContent='⏱ '+fmt(left);el.classList.toggle('low',left<5*6e4)}
+  if(left<=0){stopTimer();MX.timeouts=(MX.timeouts||0)+1;toast('Time is up for this section.');simSubmit(true)}
+}
+function simSubmit(auto){
+  stopTimer();
+  if(MX.si>=MX.secs.length-1){mxFinish();return}
+  MX.si++;MX.state='intro';MX.i=MX.secs[MX.si].start;simRender();screens.mixed.scrollTop=0;
+}
+$('go-sim').addEventListener('click',function(){show('mixed');push();simSetup()});
+
+/* ---------- my questions ---------- */
+function myqData(){return myqRead().map(function(m,i){var L=function(j){return String.fromCharCode(65+j)};
+  return {id:'my'+(i+1),topic:m.t||'My questions',subtopic:'Mine',source:'my questions',page:'',question:m.q,options:m.o.map(function(t,j){return L(j)+'. '+t}),answer:L(m.a),core:'',correct_expl:m.e||'',incorrect_expl:''}})}
+var MQE=null;
+function myqRender(){
+  var list=myqRead(),ed=MQE?list.filter(function(x){return x.id===MQE})[0]:null,o=ed?ed.o:[],h='';
+  h+='<div class="panel"><h3>'+(ed?'Edit question':'Add a question')+'</h3><div class="note" style="margin:0 0 6px">Your questions appear in Mixed study, the Exam simulator, Search and Flashcards, and are included in backups.</div>'
+   +'<textarea id="mq-q" rows="4" placeholder="Question">'+esc(ed?ed.q:'')+'</textarea>';
+  for(var i=0;i<5;i++)h+='<input type="text" class="mq-o" placeholder="Option '+String.fromCharCode(65+i)+(i<2?' (needed)':' (optional)')+'" value="'+esc(o[i]||'')+'">';
+  h+='<div class="row"><span>Correct answer</span><select id="mq-a">'+['A','B','C','D','E'].map(function(l,i){return '<option value="'+i+'"'+(ed&&ed.a===i?' selected':'')+'>'+l+'</option>'}).join('')+'</select></div>'
+   +'<input type="text" id="mq-t" placeholder="Topic (optional)" value="'+esc(ed?ed.t||'':'')+'">'
+   +'<textarea id="mq-e" rows="3" placeholder="Explanation or memory hook (optional)">'+esc(ed?ed.e||'':'')+'</textarea>'
+   +'<div class="nav"><button class="ib p" id="mq-save">'+(ed?'Save changes':'Add question')+'</button>'+(ed?'<button class="ib" id="mq-cancel">Cancel</button>':'')+'</div></div>';
+  h+='<div class="panel"><h3>Your questions ('+list.length+')</h3>';
+  if(!list.length)h+='<div class="note">Nothing here yet. Add the points your teachers stress that the banks do not cover.</div>';
+  list.slice().reverse().forEach(function(x){h+='<div class="mqrow"><div class="tn">'+esc(x.q)+'</div><button class="mini" data-e="'+x.id+'">Edit</button><button class="ib" data-d="'+x.id+'">Delete</button></div>'});
+  h+='</div>';$('myqs').innerHTML=h;
+  $('mq-save').onclick=myqSave;var c=$('mq-cancel');if(c)c.onclick=function(){MQE=null;myqRender()};
+  $('myqs').querySelectorAll('[data-e]').forEach(function(b){b.onclick=function(){MQE=b.dataset.e;myqRender();screens.myq.scrollTop=0}});
+  $('myqs').querySelectorAll('[data-d]').forEach(function(b){b.onclick=function(){if(!confirm('Delete this question?'))return;lsS('qeb-myq',myqRead().filter(function(x){return x.id!==b.dataset.d}));if(MQE===b.dataset.d)MQE=null;syncMine();myqRender();toast('Deleted.')}});
+}
+function myqSave(){
+  var q=$('mq-q').value.trim(),raw=[].slice.call(document.querySelectorAll('.mq-o')).map(function(x){return x.value.trim()}),a=parseInt($('mq-a').value,10);
+  if(!q){toast('Write the question first.');return}
+  var opts=[],ai=-1;raw.forEach(function(t,i){if(t){if(i===a)ai=opts.length;opts.push(t)}});
+  if(opts.length<2){toast('Add at least two options.');return}
+  if(ai<0){toast('The correct answer points to an empty option.');return}
+  var list=myqRead(),rec={id:MQE||('q'+Date.now().toString(36)),q:q,o:opts,a:ai,t:$('mq-t').value.trim(),e:$('mq-e').value.trim(),ts:Date.now()};
+  if(MQE){list=list.map(function(x){return x.id===MQE?rec:x})}else list.push(rec);
+  lsS('qeb-myq',list);MQE=null;syncMine();toast('Saved.');myqRender();screens.myq.scrollTop=0;
+}
+$('go-myq').addEventListener('click',function(){show('myq');push();MQE=null;myqRender()});
+/* ---------- reminders ---------- */
+function totalDue(){var d=0;ACTIVE().forEach(function(b){d+=bstats(b).due});return d}
+async function scheduleReminder(){
+  var LN=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.LocalNotifications;
+  if(!native||!LN)return false;
+  try{
+    await LN.cancel({notifications:[{id:1}]});
+    if(!S.remind)return true;
+    var perm=await LN.requestPermissions();
+    if(perm.display!=='granted'){toast('Notifications are blocked. Allow them in Android settings.');return false}
+    var t=(S.remindAt||'19:00').split(':'),due=totalDue();
+    await LN.schedule({notifications:[{id:1,title:'Quali Exam Bank',body:due?due+' question'+(due===1?' is':'s are')+' due for review. A short session keeps you on track.':'Time for a short study session.',schedule:{on:{hour:parseInt(t[0],10),minute:parseInt(t[1],10)},allowWhileIdle:true}}]});
+    return true;
+  }catch(e){toast('Could not set the reminder.');return false}
+}
+$('s-remind').addEventListener('change',async function(){S.remind=this.checked;save();if(!native&&this.checked)toast('Reminders work in the installed app.');var ok=await scheduleReminder();if(this.checked&&native&&!ok){S.remind=false;save();this.checked=false}});
+$('s-remind-at').addEventListener('change',function(){S.remindAt=this.value||'19:00';save();scheduleReminder()});
+
+/* ---------- motivational lines ---------- */
+var QUOTES=[
+"You do not need a perfect day. You need a day that moves you one question forward.",
+"Every question you review today is one less surprise on exam day.",
+"Tired is allowed. Quitting is optional.",
+"Small, steady study beats a heroic all-nighter every time.",
+"You chose medicine because you can carry difficult things. This is one of them.",
+"Consistency is quieter than motivation, and it lasts much longer.",
+"A wrong answer now costs nothing. Make your mistakes here, while they are cheap.",
+"Rest is part of the plan. It is not a break from it.",
+"From the inside, weeks of preparation feel like boredom. From the outside, they look like progress.",
+"Do the next block. Not the whole mountain, just the next block.",
+"Nobody remembers how many hours you doubted yourself. They remember the result you earned.",
+"You are not behind. You are exactly one session away from being further ahead.",
+"The question you got wrong today is the one you will answer correctly in the hall.",
+"Discipline is doing it on the days you do not feel like it, which is most of the days.",
+"Your future patients are counting on the person you are becoming right now.",
+"Long preparation is a test of patience before it is a test of knowledge.",
+"Keep your phone away for one more hour. The feed will still be there when you are done.",
+"Sleep, water, a short walk. They are study tools too.",
+"Progress that you cannot see yet is still progress.",
+"Study like the exam is a month away, rest like it is a year away, and show up like it is tomorrow.",
+"Ten minutes of honest revision beats an hour of staring at the page.",
+"Comparing your chapter one to someone else's chapter ten helps nobody. Read your own pages.",
+"Fear shrinks every time you do the thing it warned you about.",
+"Do not wait to feel ready. Get ready, and the feeling will catch up.",
+"A hard topic is only a topic you have not met enough times yet.",
+"You have survived every difficult day so far. That is a perfect record.",
+"One more set of questions. That is the whole job for the next twenty minutes.",
+"The exam measures one day. Your preparation is built over many. Trust the many.",
+"Slow is fine. Stopping is the only thing that is not.",
+"Be the kind of doctor who did the work when nobody was watching.",
+"Break the week into days, the day into blocks, the block into questions. Then just answer one.",
+"Doubt is normal at this stage. It means you care about the outcome.",
+"Review what you got wrong with curiosity, not with shame.",
+"Your effort today is a gift to the version of you who walks into the exam hall calm.",
+"Hard work in private, quiet confidence in public.",
+"If today was messy, start again tomorrow. The plan is not fragile.",
+"Every great clinician once sat exactly where you are sitting, with a thick book and a longer week.",
+"Keep going. The finish line does not move, but you do.",
+"Study with purpose, then close the book and let your brain do its filing overnight.",
+"You are allowed to be proud of yourself on the way, not only at the end."
+];
+var EXAMWEEK=[
+"Exam week: you are not learning new things now, you are collecting what you already know.",
+"Trust the months of work behind you. This week is about staying calm and sharp.",
+"Sleep tonight. A rested mind recalls more than a worried one.",
+"Light revision, good food, early bed. Let the preparation settle.",
+"You know more than you think. Walk in and show it.",
+"Breathe slowly. Read each question once, carefully, and answer what is asked.",
+"One question at a time. That is how every exam in history was passed.",
+"The hard part is nearly done. Finish it with a steady head."
+];
+var qIdx=null;
+function dayOfYear(){var n=new Date();return Math.floor((n-new Date(n.getFullYear(),0,0))/864e5)}
+
+var FAMOUS=[
+["Life is short, the art long, opportunity fleeting, experience deceptive, judgment difficult.","Hippocrates, Aphorisms (translation varies)"],
+["The master-word in medicine is work.","William Osler"],
+["Medicine is a science of uncertainty and an art of probability.","William Osler"],
+["He who studies medicine without books sails an uncharted sea, but he who studies medicine without patients does not go to sea at all.","William Osler"],
+["The good physician treats the disease; the great physician treats the patient who has the disease.","William Osler"],
+["We are what we repeatedly do. Excellence, then, is not an act, but a habit.","Will Durant, summing up Aristotle"],
+["Genius is one percent inspiration and ninety-nine percent perspiration.","Thomas Edison"],
+["A journey of a thousand miles begins with a single step.","Lao Tzu"],
+["It does not matter how slowly you go as long as you do not stop.","attributed to Confucius"],
+["Fall seven times, stand up eight.","Japanese proverb"],
+["When spider webs unite, they can tie up a lion.","Ethiopian proverb"],
+["Perseverance is not a long race; it is many short races one after the other.","Walter Elliot"],
+["Failure is simply the opportunity to begin again, this time more intelligently.","Henry Ford"],
+["I learned that courage was not the absence of fear, but the triumph over it.","Nelson Mandela"],
+["Education is the most powerful weapon which you can use to change the world.","Nelson Mandela"],
+["If you can't fly then run, if you can't run then walk, if you can't walk then crawl, but whatever you do you have to keep moving forward.","Martin Luther King Jr."],
+["The more that you read, the more things you will know. The more that you learn, the more places you'll go.","Dr. Seuss"],
+["You miss 100% of the shots you don't take.","Wayne Gretzky"],
+["The only way to do great work is to love what you do.","Steve Jobs"],
+["Nothing will work unless you do.","Maya Angelou"],
+["Rome was not built in a day.","Proverb"]
+];
+var FAMOUS_EXAM=[
+["I learned that courage was not the absence of fear, but the triumph over it.","Nelson Mandela"],
+["It does not matter how slowly you go as long as you do not stop.","attributed to Confucius"],
+["Fall seven times, stand up eight.","Japanese proverb"],
+["Nothing will work unless you do.","Maya Angelou"]
+];
+function mixPools(a,b){var o=[],n=Math.max(a.length,b.length);for(var i=0;i<n;i++){if(i<a.length)o.push(a[i]);if(i<b.length)o.push(b[i])}return o}
+function quoteList(){
+  var L=daysLeft(),ex=(L!=null&&L<=7),mode=S.quotes||'mixed';
+  var mine=(ex?EXAMWEEK:QUOTES).map(function(t){return [t,'']}),fam=ex?FAMOUS_EXAM:FAMOUS;
+  return mode==='famous'?fam:mode==='mine'?mine:mixPools(fam,mine);
+}
+function qHtml(q){return '<p>'+esc(q[0])+'</p>'}
+function showQuote(next){
+  var el=$('quote');if(!el)return;var q=quoteList();
+  if(qIdx===null||next)qIdx=(qIdx===null?dayOfYear():qIdx+1);
+  var cur=q[qIdx%q.length];el.innerHTML=qHtml(cur)+'<small>'+(cur[1]?'— <b>'+esc(cur[1])+'</b> · ':'')+(daysLeft()!=null&&daysLeft()<=7?'Exam week · ':'')+'Tap for another</small>';
+}
+$('quote').addEventListener('click',function(){showQuote(true)});
+function quoteCard(){var q=quoteList(),c=q[Math.floor(Math.random()*q.length)];return '<div class="quote resq" style="cursor:default">'+qHtml(c)+(c[1]?'<small>— <b>'+esc(c[1])+'</b></small>':'')+'</div>'}
+
+/* ---------- first-run setup & subjects ---------- */
+function renderSubj(){
+  var el=$('s-subj'),act=ACTIVE().map(function(b){return b.k});
+  el.innerHTML=BANKS.filter(function(b){return b.k!=='mine'}).map(function(b){return '<label class="lbl"><input type="checkbox" data-k="'+b.k+'"'+(act.indexOf(b.k)>=0?' checked':'')+'> '+b.icon+' '+esc(b.name)+'</label>'}).join('');
+  el.querySelectorAll('input').forEach(function(c){c.onchange=function(){
+    var ks=[].slice.call(el.querySelectorAll('input:checked')).map(function(x){return x.dataset.k});
+    if(!ks.length){c.checked=true;toast('Keep at least one subject.');return}
+    S.subjects=ks.length===BANKS.length-1?undefined:ks;save();refreshHome()}});
+}
+var wTheme='auto';
+function showWelcome(){
+  var w=$('welcome');$('w-exam').value=S.exam||'';$('w-rem').checked=!!S.remind;$('w-time').value=S.remindAt||'19:00';
+  var act=ACTIVE().map(function(b){return b.k});document.querySelectorAll('.w-s').forEach(function(c){c.checked=act.indexOf(c.value)>=0});
+  wTheme=S.theme||'auto';document.querySelectorAll('#w-theme button').forEach(function(b){b.classList.toggle('on',b.dataset.v===wTheme)});
+  w.style.display='block';
+}
+$('w-theme').addEventListener('click',function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;wTheme=v;S.theme=v;applyShellTheme();document.querySelectorAll('#w-theme button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v)})});
+$('w-go').addEventListener('click',async function(){
+  S.exam=$('w-exam').value||undefined;
+  var ks=[].slice.call(document.querySelectorAll('.w-s:checked')).map(function(x){return x.value});
+  if(!ks.length)ks=BANKS.filter(function(b){return b.k!=='mine'}).map(function(b){return b.k});
+  S.subjects=ks.length===BANKS.length-1?undefined:ks;
+  S.theme=wTheme;S.remind=$('w-rem').checked;S.remindAt=$('w-time').value||'19:00';S.setupDone=true;save();
+  applyShellTheme();$('welcome').style.display='none';refreshHome();syncSheet();
+  if(S.remind){var ok=await scheduleReminder();if(!ok&&native){S.remind=false;save()}else if(!native)toast('Reminders work in the installed app.')}
+});
+$('w-skip').addEventListener('click',function(){S.setupDone=true;save();$('welcome').style.display='none'});
+$('s-setup').addEventListener('click',function(){closeSheet();showWelcome()});
+/* ---------- start ---------- */
+if(!S.setupDone)showWelcome();
+loadCfg().then(function(){syncSheet();if(native){checkUpdate(true);scheduleReminder()}});
+refreshHome();
+})();
+</script>
+</body></html>
