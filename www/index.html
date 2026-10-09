@@ -1,32 +1,205 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f4c5c">
-<link rel="manifest" href="manifest.json">
 <title>Quali Exam Bank</title>
 <style>
-:root{--bg:#e8eeef;--fg:#15262b;--card:#fff;--bd:#d3dfe1;--accent:#0f4c5c;--muted:#4f656b}
-@media(prefers-color-scheme:dark){:root{--bg:#10191c;--fg:#e6f0f1;--card:#1a2a2e;--bd:#2c4146;--accent:#5fb4c6;--muted:#9bb0b4}}
+:root{--bg:#e8eeef;--fg:#15262b;--card:#fff;--bd:#d3dfe1;--accent:#0f4c5c;--on:#fff;--muted:#4f656b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10191c;--fg:#e6f0f1;--card:#1a2a2e;--bd:#2c4146;--accent:#5fb4c6;--on:#06222a;--muted:#9bb0b4}}
+:root[data-theme="dark"]{--bg:#10191c;--fg:#e6f0f1;--card:#1a2a2e;--bd:#2c4146;--accent:#5fb4c6;--on:#06222a;--muted:#9bb0b4}
+html,body{height:100%}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,Roboto,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)}
-header{padding:28px 4px 14px}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,Roboto,"Segoe UI",sans-serif;display:flex;flex-direction:column;overflow:hidden}
+#bar{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--card);border-bottom:1px solid var(--bd);min-height:48px;flex:none}
+#bar .title{flex:1;font-weight:700;font-size:17px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib{background:none;border:1px solid var(--bd);color:var(--fg);border-radius:10px;font:600 15px inherit;padding:8px 12px;cursor:pointer}
+.ib.p{background:var(--accent);color:var(--on);border-color:var(--accent)}
+#menu{flex:1;overflow:auto;padding:0 16px 24px}
+header{padding:22px 4px 10px;max-width:900px;margin:0 auto}
 h1{margin:0;font-size:26px;color:var(--accent)}
 p.sub{margin:4px 0 0;color:var(--muted);font-size:14px}
-.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));max-width:900px;margin:10px auto 30px}
-a.card{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;text-decoration:none;color:inherit}
-a.card:active{transform:scale(.98)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));max-width:900px;margin:10px auto}
+.card{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;color:inherit;font:inherit;text-align:left;cursor:pointer;width:100%}
+.card:active{transform:scale(.98)}
 .ic{font-size:30px;width:52px;height:52px;border-radius:12px;background:var(--bg);display:grid;place-items:center;flex:none}
 .t{font-weight:700;font-size:17px}.d{font-size:13px;color:var(--muted);margin-top:2px}
-footer{text-align:center;color:var(--muted);font-size:12px;padding-bottom:20px}
+#frame{display:none;flex:1;width:100%;border:0;background:#fff}
+#scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20}
+#sheet{display:none;position:fixed;left:0;right:0;bottom:0;max-height:82%;overflow:auto;background:var(--card);color:var(--fg);border-radius:18px 18px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));z-index:21;box-shadow:0 -4px 20px rgba(0,0,0,.3)}
+#sheet h2{margin:2px 0 12px;font-size:19px;color:var(--accent);display:flex;justify-content:space-between;align-items:center}
+#sheet h3{margin:18px 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0}
+.seg{display:flex;border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+.seg button{background:none;border:0;border-right:1px solid var(--bd);color:var(--fg);padding:8px 11px;font:600 13px inherit;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--accent);color:var(--on)}
+select{background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:10px;padding:8px;font:inherit}
+.sw{position:relative;width:46px;height:26px;flex:none}
+.sw input{opacity:0;width:100%;height:100%;margin:0;position:absolute;inset:0;z-index:2;cursor:pointer}
+.sw i{position:absolute;inset:0;background:var(--bd);border-radius:13px;transition:.15s}
+.sw i:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.15s}
+.sw input:checked+i{background:var(--accent)}
+.sw input:checked+i:after{left:23px}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tools button{background:var(--bg);border:1px solid var(--bd);color:var(--fg);border-radius:12px;padding:12px 8px;font:600 14px inherit;cursor:pointer}
+.tools button[disabled]{opacity:.35}
+.note{font-size:12px;color:var(--muted);margin:6px 0 0}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:#222;color:#fff;padding:10px 16px;border-radius:20px;font-size:14px;z-index:30;display:none;max-width:88%;text-align:center}
 </style></head><body>
-<header><h1>Quali Exam Bank</h1><p class="sub">Choose a subject. Works offline; progress, notes and flags are saved on this device.</p></header>
+<div id="bar"><button class="ib" id="back" style="display:none">←</button><div class="title" id="title">Quali Exam Bank</div><button class="ib" id="gear">⚙ Settings</button></div>
+<div id="menu">
+<header><h1>Quali Exam Bank</h1><p class="sub">Choose a subject. Settings and tools are in the top-right menu and apply to every bank.</p></header>
 <div class="grid">
-<a class="card" href="banks/surgery.html"><div class="ic">🔪</div><div><div class="t">Surgery</div><div class="d">Q bank</div></div></a>
-<a class="card" href="banks/im.html"><div class="ic">🩺</div><div><div class="t">Internal Medicine</div><div class="d">Q bank</div></div></a>
-<a class="card" href="banks/obgyn.html"><div class="ic">🤰</div><div><div class="t">OB &amp; Gyn</div><div class="d">Q bank</div></div></a>
-<a class="card" href="banks/pediatrics.html"><div class="ic">🧸</div><div><div class="t">Pediatrics</div><div class="d">Merged Q bank</div></div></a>
-<a class="card" href="banks/publichealth.html"><div class="ic">🌍</div><div><div class="t">Public Health</div><div class="d">Q bank</div></div></a>
+<button class="card" data-k="surgery"><div class="ic">🔪</div><div><div class="t">Surgery</div><div class="d">Q bank</div></div></button>
+<button class="card" data-k="im"><div class="ic">🩺</div><div><div class="t">Internal Medicine</div><div class="d">Q bank</div></div></button>
+<button class="card" data-k="obgyn"><div class="ic">🤰</div><div><div class="t">OB &amp; Gyn</div><div class="d">Q bank</div></div></button>
+<button class="card" data-k="pediatrics"><div class="ic">🧸</div><div><div class="t">Pediatrics</div><div class="d">Merged Q bank</div></div></button>
+<button class="card" data-k="publichealth"><div class="ic">🌍</div><div><div class="t">Public Health</div><div class="d">Q bank</div></div></button>
 </div>
-<footer>Use your phone's Back button to return to this menu.</footer>
-<script>if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</div>
+<iframe id="frame" title="Question bank"></iframe>
+<div id="scrim"></div>
+<div id="sheet" role="dialog" aria-label="Settings and tools">
+<h2><span id="sheet-title">Settings</span><button class="ib" id="sheet-x">Done</button></h2>
+<h3>Appearance</h3>
+<div class="row"><span>Theme</span><div class="seg" id="s-theme"><button data-v="auto">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button></div></div>
+<div class="row"><span>Color</span><select id="s-palette"><option value="teal">Teal</option><option value="ocean">Ocean</option><option value="rose">Rose</option><option value="sepia">Sepia</option><option value="graphite">Graphite</option></select></div>
+<div class="row"><span>Layout</span><div class="seg" id="s-ui"><button data-v="auto">Auto</button><button data-v="phone">Phone</button><button data-v="pc">PC</button><button data-v="classic">Classic</button></div></div>
+<h3>Answering</h3>
+<div class="row"><span>Lock answer until I choose</span><label class="sw"><input type="checkbox" id="s-lock"><i></i></label></div>
+<div class="row"><span>Show answer instantly when I choose</span><label class="sw"><input type="checkbox" id="s-instant"><i></i></label></div>
+<div id="tools-sec">
+<h3>Tools for <span id="tools-name">this bank</span></h3>
+<div class="tools">
+<button data-t="stats">📊 Stats</button>
+<button data-t="copy">📋 Copy all questions</button>
+<button data-t="export">⬆ Export notes</button>
+<button data-t="import">⬇ Import notes (file)</button>
+<button data-t="importclip">📎 Import notes (clipboard)</button>
+<button data-t="ai">🔑 AI explanations key</button>
+</div>
+<p class="note">Export opens your phone's share sheet (or copies to the clipboard). Greyed-out tools aren't available in this bank.</p>
+</div>
+</div>
+<div id="toast"></div>
+
+<script>
+(function(){
+var NAMES={surgery:'Surgery',im:'Internal Medicine',obgyn:'OB & Gyn',pediatrics:'Pediatrics',publichealth:'Public Health'};
+var frame=document.getElementById('frame'),menu=document.getElementById('menu'),back=document.getElementById('back'),
+    gear=document.getElementById('gear'),title=document.getElementById('title'),sheet=document.getElementById('sheet'),
+    scrim=document.getElementById('scrim'),current=null;
+var native=!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());
+/* ---------- settings ---------- */
+var S={};try{S=JSON.parse(localStorage.getItem('qeb-settings')||'{}')||{}}catch(e){}
+function save(){try{localStorage.setItem('qeb-settings',JSON.stringify(S))}catch(e){}}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(function(){t.style.display='none'},2600)}
+function win(){try{return current?frame.contentWindow:null}catch(e){return null}}
+function fn(w,n){try{return w&&typeof w[n]==='function'}catch(e){return false}}
+function applyShellTheme(){
+  var t=S.theme||'auto',r=document.documentElement;
+  if(t==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',t);
+}
+function applyTheme(w){
+  var t=S.theme; if(!t)return;
+  var d=w.document.documentElement,eff=t;
+  try{ if(t==='auto'){w.localStorage.removeItem('qb-theme');eff=w.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'} else w.localStorage.setItem('qb-theme',t)}catch(e){}
+  d.setAttribute('data-theme',eff); if(fn(w,'updateThemeBtn'))w.updateThemeBtn();
+}
+function setCheck(w,id,v){var el=w.document.getElementById(id);if(!el||el.checked===v)return;el.checked=v;el.dispatchEvent(new Event('change'))}
+function applyAll(w){
+  if(!w)return;
+  try{
+    applyTheme(w);
+    if(S.palette&&fn(w,'setPalette'))w.setPalette(S.palette);
+    if(S.ui!==undefined){try{if(S.ui==='auto')w.localStorage.removeItem('qb-ui');else w.localStorage.setItem('qb-ui',S.ui)}catch(e){} if(fn(w,'__applyUI'))w.__applyUI()}
+    if(S.lock!==undefined)setCheck(w,'lockexp',!!S.lock);
+    if(S.instant!==undefined)setCheck(w,'instant',!!S.instant);
+  }catch(e){}
+}
+function syncSheet(){
+  document.querySelectorAll('#s-theme button').forEach(function(b){b.classList.toggle('on',b.dataset.v===(S.theme||'auto'))});
+  document.querySelectorAll('#s-ui button').forEach(function(b){b.classList.toggle('on',b.dataset.v===(S.ui||'auto'))});
+  document.getElementById('s-palette').value=S.palette||'teal';
+  document.getElementById('s-lock').checked=!!S.lock;
+  document.getElementById('s-instant').checked=!!S.instant;
+  var w=win(),sec=document.getElementById('tools-sec');
+  sec.style.display=current?'block':'none';
+  document.getElementById('tools-name').textContent=current?NAMES[current]:'';
+  document.getElementById('sheet-title').textContent=current?'Settings & tools':'Settings';
+  var avail={stats:'toggleStats',copy:'copyAll',export:'exportNotes',import:'importNotes',importclip:'mergeState',ai:'toggleAIcfg'};
+  document.querySelectorAll('.tools button').forEach(function(b){b.disabled=!fn(w,avail[b.dataset.t])});
+}
+document.getElementById('s-theme').addEventListener('click',function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;S.theme=v;save();applyShellTheme();applyAll(win());syncSheet()});
+document.getElementById('s-ui').addEventListener('click',function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;S.ui=v;save();applyAll(win());syncSheet()});
+document.getElementById('s-palette').addEventListener('change',function(){S.palette=this.value;save();applyAll(win())});
+document.getElementById('s-lock').addEventListener('change',function(){S.lock=this.checked;save();applyAll(win())});
+document.getElementById('s-instant').addEventListener('change',function(){S.instant=this.checked;save();applyAll(win())});
+applyShellTheme();
+/* ---------- sheet ---------- */
+function openSheet(){syncSheet();sheet.style.display='block';scrim.style.display='block'}
+function closeSheet(){sheet.style.display='none';scrim.style.display='none'}
+gear.addEventListener('click',openSheet);scrim.addEventListener('click',closeSheet);document.getElementById('sheet-x').addEventListener('click',closeSheet);
+/* ---------- tools ---------- */
+async function exportNotes(w){
+  var json;
+  try{json=w.eval('JSON.stringify({notes:NOTES,stickynotes:SN,highlights:HL,progress:PROG,flags:FLAGS,reports:REPS,times:TIMES},null,1)')}catch(e){ if(fn(w,'exportNotes'))w.exportNotes(); return }
+  var name='qbank-'+current+'-notes.json';
+  try{var f=new File([json],name,{type:'application/json'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});return}}catch(e){if(e&&e.name==='AbortError')return}
+  try{await navigator.clipboard.writeText(json);toast('Notes copied. Paste them into a note or message to keep a backup.')}catch(e){if(fn(w,'exportNotes'))w.exportNotes()}
+}
+async function importClip(w){
+  var txt='';
+  try{txt=await navigator.clipboard.readText()}catch(e){txt=prompt('Paste your exported notes here:')||''}
+  if(!txt)return;
+  try{w.mergeState(JSON.parse(txt));if(fn(w,'render'))w.render();toast('Notes imported.')}catch(e){toast('That is not a valid notes export.')}
+}
+document.querySelector('.tools').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b||b.disabled)return;var w=win();if(!w)return;var t=b.dataset.t;
+  if(t==='stats'){closeSheet();w.toggleStats();w.scrollTo(0,0)}
+  else if(t==='copy'){w.copyAll();closeSheet();toast('Questions copied to clipboard.')}
+  else if(t==='export'){closeSheet();exportNotes(w)}
+  else if(t==='import'){closeSheet();var i=w.document.getElementById('imp-file');if(i)i.click()}
+  else if(t==='importclip'){closeSheet();importClip(w)}
+  else if(t==='ai'){closeSheet();w.toggleAIcfg(true);w.scrollTo(0,0)}
+});
+/* ---------- bank open/close ---------- */
+var CSS='#brand,.toolsrow,.chkgrp,#more-btn{display:none!important}';
+frame.addEventListener('load',function(){
+  if(!current)return; var w=win(); if(!w)return;
+  try{var st=w.document.createElement('style');st.textContent=CSS;w.document.head.appendChild(st)}catch(e){}
+  applyAll(w);
+});
+function openBank(k){
+  var el=document.getElementById('b-'+k);
+  current=k;
+  if(el){frame.removeAttribute('src');frame.srcdoc=el.textContent.replace(/<\\\/script/g,'</script')}
+  else{frame.removeAttribute('srcdoc');frame.src='banks/'+k+'.html'}
+  menu.style.display='none';frame.style.display='block';back.style.display='';title.textContent=NAMES[k];gear.textContent='⚙ Tools';
+  if(!native){try{history.pushState({k:k},'')}catch(e){}}
+}
+function closeBank(){
+  current=null;frame.style.display='none';frame.removeAttribute('src');frame.srcdoc='';menu.style.display='block';
+  back.style.display='none';title.textContent='Quali Exam Bank';gear.textContent='⚙ Settings';closeSheet();
+}
+document.querySelectorAll('.card').forEach(function(b){b.addEventListener('click',function(){openBank(b.dataset.k)})});
+back.addEventListener('click',function(){
+  if(!current)return;
+  if(native)closeBank(); else{try{history.back()}catch(e){closeBank()} setTimeout(function(){if(current)closeBank()},150)}
+});
+window.addEventListener('popstate',function(){if(current)closeBank()});
+/* Android back button (Capacitor) */
+try{
+  var App=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.App;
+  if(App&&App.addListener){
+    App.addListener('backButton',function(){
+      if(sheet.style.display==='block')closeSheet();
+      else if(current)closeBank();
+      else App.exitApp();
+    });
+  }
+}catch(e){}
+})();
+</script>
 </body></html>
