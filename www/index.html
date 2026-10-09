@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f4c5c">
+<link rel="manifest" href="manifest.json">
+<title>Quali Exam Bank</title>
+<style>
+:root{--bg:#e8eeef;--fg:#15262b;--card:#fff;--bd:#d3dfe1;--accent:#0f4c5c;--muted:#4f656b}
+@media(prefers-color-scheme:dark){:root{--bg:#10191c;--fg:#e6f0f1;--card:#1a2a2e;--bd:#2c4146;--accent:#5fb4c6;--muted:#9bb0b4}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,Roboto,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)}
+header{padding:28px 4px 14px}
+h1{margin:0;font-size:26px;color:var(--accent)}
+p.sub{margin:4px 0 0;color:var(--muted);font-size:14px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));max-width:900px;margin:10px auto 30px}
+a.card{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;text-decoration:none;color:inherit}
+a.card:active{transform:scale(.98)}
+.ic{font-size:30px;width:52px;height:52px;border-radius:12px;background:var(--bg);display:grid;place-items:center;flex:none}
+.t{font-weight:700;font-size:17px}.d{font-size:13px;color:var(--muted);margin-top:2px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding-bottom:20px}
+</style></head><body>
+<header><h1>Quali Exam Bank</h1><p class="sub">Choose a subject. Works offline; progress, notes and flags are saved on this device.</p></header>
+<div class="grid">
+<a class="card" href="banks/surgery.html"><div class="ic">🔪</div><div><div class="t">Surgery</div><div class="d">Q bank</div></div></a>
+<a class="card" href="banks/im.html"><div class="ic">🩺</div><div><div class="t">Internal Medicine</div><div class="d">Q bank</div></div></a>
+<a class="card" href="banks/obgyn.html"><div class="ic">🤰</div><div><div class="t">OB &amp; Gyn</div><div class="d">Q bank</div></div></a>
+<a class="card" href="banks/pediatrics.html"><div class="ic">🧸</div><div><div class="t">Pediatrics</div><div class="d">Merged Q bank</div></div></a>
+<a class="card" href="banks/publichealth.html"><div class="ic">🌍</div><div><div class="t">Public Health</div><div class="d">Q bank</div></div></a>
+</div>
+<footer>Use your phone's Back button to return to this menu.</footer>
+<script>if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body></html>
