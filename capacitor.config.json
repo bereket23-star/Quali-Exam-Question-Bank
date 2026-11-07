@@ -1,7 +1,6 @@
 {
-  "appId": "org.qualiexambank.app",
-  "appName": "Quali Exam Bank",
+  "appId": "com.qualiexam.bank",
+  "appName": "Quali Exam Prep",
   "webDir": "www",
-  "server": { "androidScheme": "https" },
   "android": { "allowMixedContent": false }
 }
