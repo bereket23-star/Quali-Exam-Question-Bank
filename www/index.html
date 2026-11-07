@@ -338,7 +338,6 @@ mark.vhl{background:rgba(255,214,10,.55);color:inherit;border-radius:3px;padding
 @media (prefers-color-scheme:dark){mark.qm{background:rgba(255,200,60,.4);color:inherit}}
 #q-subj .chip,#q-recent .chip{cursor:pointer;border:1px solid var(--bd);background:var(--card);color:inherit;font:inherit;font-size:13px;padding:6px 10px;border-radius:999px}
 #q-subj .chip.on{background:var(--accent,#0f4c5c);color:var(--on,#fff);border-color:transparent}#q-more{margin:10px 0}</style>
-<style id="v28-css">#bk-tabs{display:grid;grid-template-columns:repeat(4,1fr)}#bk-tabs button{padding-left:4px;padding-right:4px;font-size:13px;white-space:nowrap}</style>
 </head><body>
 <div id="splash"><span>📚</span><b>Quali Exam Prep</b></div>
 <div id="bar" role="banner"><button class="ib" id="back" style="display:none" aria-label="Back">⬅️</button><div class="title" id="title" tabindex="-1" role="heading" aria-level="1"></div><button class="ib" id="gear" aria-label="Settings" title="Settings">⚙️</button></div>
@@ -11916,7 +11915,6 @@ function brStep(d){
   else if(BK.tab==='memes')BK.mi=mod(BK.mi+d,MEMES.length);
   else if(BK.tab==='facts')BK.fi=mod(BK.fi+d,FACTS.length);
   else if(BK.tab==='calm')BK.ci=mod(BK.ci+d,CALM.length);
-  else if(BK.tab==='cheeky'&&ckOk()){CK.i=mod(CK.i+d,CHEEKY.length);CK.show=false}
   else return;
   BK.anim=d;brSave();brRender();
 }
@@ -12004,76 +12002,21 @@ function stretchTimer(btn,sec,i){
   var t=setInterval(function(){left--;if(view!=='breakr'||!document.body.contains(btn)){clearInterval(t);return}
     if(left<=0){clearInterval(t);btn.textContent='Done ✔';btn.dataset.run='';try{navigator.vibrate&&navigator.vibrate(120)}catch(e){}}else btn.textContent=left+'s'},1000);
 }
-
-var CHEEKY=[
-['Why do surgeons make terrible partners?','They always say it is just a small incision, then take two hours.'],
-['What did the urologist say when the patient asked if it would hurt?','"Only a little prick."'],
-['Why does the anaesthetist never lack for dates?','She knows exactly how to put people under.'],
-['Why are cardiologists so bad at flirting?','They check for a pulse after every line.'],
-['What does a dermatologist say on a first date?','"I am not here for anything skin-deep."'],
-['Why did the radiologist get slapped?','He said, "I can see right through you."'],
-['Why do OB-GYNs never get lost?','They always know where the opening is.'],
-['What is a sleep-deprived intern\'s idea of foreplay?','"Is the chart done?"'],
-['What is the difference between a surgeon and a med student at 3 a.m.?','The surgeon knows where everything goes. The student hopes it fits.'],
-['Why did the orthopaedic surgeon have a great night?','He nailed it, twice, and the bed needed new screws.'],
-['How does a pharmacist flirt?','"Are you my prescription? I would like to take you twice a day, with food."'],
-['What do surgeons and bad dates have in common?','Both leave you with a scar and swear it was routine.'],
-['Why did the med student fail the reproductive system exam?','She kept putting the answers in the wrong holes. On the answer sheet.'],
-['Why did the neurologist bring a reflex hammer to the bedroom?','He wanted to test her responses. All he got was a polite knee jerk.'],
-['Why are psychiatrists good in bed?','They ask the right questions and never rush the session.'],
-['What did the stethoscope say on the first date?','"I will be listening to your heart. Please do not move in too fast."'],
-['Why did the epidemiologist break up with the statistician?','Too many confounding variables and not enough power.'],
-['Why did the midwife love her job?','Every shift ends with a big push and a happy delivery.'],
-['What is the anatomy lecturer\'s favourite pick-up line?','"Is that your sacrum? Because I would like to see the back of it again."'],
-['Why do gastroenterologists make patient lovers?','They are always willing to go the extra length.'],
-['What did the pelvis say to the femur?','"Stop hanging around, you only ever call when you need a socket."'],
-['Why was the nurse so calm during the night shift?','Because she had learned that everything eventually comes to a head. And a discharge.'],
-['What did the ENT say after a long day?','"I need someone who actually listens. Preferably with both ears."'],
-['Why did the consultant like the new registrar?','He was great at taking a history and even better at not asking about hers.']
-];
-var TRUTH_C=['What is the dumbest thing you have done on a clinical rotation?','Which specialty do you secretly think is overrated?','What is your worst exam-night habit?','Which consultant do you impersonate best?','What is the most embarrassing thing you have said to a patient?','Which lecture have you pretended to understand?','What is your weirdest study ritual?','Who in the class would make the scariest consultant?','What did you google at 3 a.m. during exams?','What is the pettiest reason you have skipped a lecture?','If you were not studying medicine, what would you be doing?','What are you most afraid of on your first night on call?','Which textbook have you never actually opened?','What is the nicest thing a patient has said to you?','What is your guilty-pleasure study snack?','What is the worst grade you have ever got, and what happened?','Which classmate would you trust with your life, and which with your notes?','What is the most useless medical fact you know?','Have you ever fallen asleep in a lecture? Where did your head end up?','Which hospital smell do you never want to smell again?'];
-var DARE_C=['Explain the Krebs cycle using only hand gestures.','Do your best impression of a consultant on a ward round.','Speak like a news reader for the next 3 minutes.','Name 10 bones in 15 seconds.','Do 10 squats while reciting the cranial nerves.','Describe your last exam like a sports commentator.','Sing a drug mechanism to the tune of any song.','Balance a pen on your upper lip for 20 seconds.','Give a 30-second talk on why sleep is overrated, then admit it is not.','Make your best "I have bad news" doctor face and hold it for 10 seconds.','Say the alphabet backwards.','Act out a patient with a very dramatic cough.','Tell a medical joke with a perfectly straight face.','Hold a plank for 30 seconds.','Teach the group one thing you learned today in 60 seconds.','Mime a malfunctioning ventilator like a robot.','Let someone pick a topic, then give a 30-second lecture on it.','Do a slow-motion hospital-drama walk across the room.'];
-var TRUTH_S=['What is the most awkward thing that has happened to you in a physical-examination class?','Who in your year would be the charming doctor in a romantic comedy?','What is the cringiest pick-up line you have heard in a hospital?','What is your best (or worst) story of flirting on a rotation?','Which specialty has the best-looking doctors, in your opinion?','Have you ever had a crush on someone on your rotation? How did you hide it?','What is the most embarrassing thing you have said while sleep-deprived?','What is the most romantic thing you have ever done for someone?','Which fictional doctor is your celebrity crush?','What is the most unprofessional thought you have had during a lecture?'];
-var DARE_S=['Read a line from a gynaecology textbook in your most dramatic romance-novel voice.','Give your best pick-up line using only medical terms.','Compliment the person on your left like a doctor from a soap opera.','Say "I love you" dramatically using an anatomy term.','Write a bad romantic poem about the pancreas in 30 seconds and read it aloud.','Pretend to propose to a stethoscope.','Do a sultry reading of a drug dosing table.','Act out a love story between two enzymes.','Give a smouldering look like a character in a medical drama and hold it for 10 seconds.','Narrate a romantic dinner as a nature documentary presenter.'];
-var CK={i:0,show:false,o:null},TD={lvl:'chill',type:'',text:'',decks:{}};
-function ckOk(){return !!lsJ('qeb-cheeky',0)}
-function gateHtml(t){return '<div class="panel"><h3>'+t+'</h3><div class="note" style="margin:0 0 10px">Adult-flavoured medical humour. Innuendo only, nothing explicit. Continue only if you are 18 or over and happy to see it.</div><div class="nav"><button class="ib p" id="ck-ok">I am 18+, show me</button><button class="ib" id="ck-no">No thanks</button></div></div>'}
-function cheekyHtml(){if(!ckOk())return gateHtml('🌶 Cheeky jokes (18+)');
-  if(!CK.o)CK.o=shuffle(CHEEKY.map(function(x,i){return i}));
-  var j=CHEEKY[CK.o[mod(CK.i,CK.o.length)]];
-  return '<div class="panel"><div class="note" style="margin:0 0 6px;text-align:right">'+(mod(CK.i,CK.o.length)+1)+' / '+CHEEKY.length+'</div><div class="joke">'+esc(j[0])+(CK.show?'<div class="pu">'+esc(j[1])+'</div>':'')+'</div><div class="nav"><button class="ib" id="bk-prev">← Prev</button>'+(CK.show?'':'<button class="ib p" id="ck-rev">Tell me</button>')+'<button class="ib" id="bk-next">Next →</button></div><div class="note" style="text-align:center;margin:8px 0 0">Keep it fun. Skip anything that makes someone uncomfortable.</div></div>'}
-function todDraw(type){var lvl=TD.lvl,key=lvl+type,list=type==='truth'?(lvl==='spicy'?TRUTH_S:TRUTH_C):(lvl==='spicy'?DARE_S:DARE_C),d=TD.decks[key];
-  if(!d||d.p>=list.length){d=TD.decks[key]={o:shuffle(list.map(function(x,i){return i})),p:0}}
-  TD.type=type;TD.text=list[d.o[d.p++]]}
-function todHtml(){var h='<div class="panel"><h3>🎲 Truth or dare</h3><div class="note" style="margin:0 0 8px">Pass the phone around. Skipping is always allowed.</div><div class="seg" id="td-lvl"><button data-lvl="chill"'+(TD.lvl==='chill'?' class="on"':'')+'>😇 Chill</button><button data-lvl="spicy"'+(TD.lvl==='spicy'?' class="on"':'')+'>🌶 Spicy (18+)</button></div></div>';
-  if(TD.lvl==='spicy'&&!ckOk())return h+gateHtml('🌶 Spicy mode (18+)');
-  h+='<div class="panel">'+(TD.text?'<div class="note" style="margin:0 0 6px;text-align:center"><b>'+(TD.type==='truth'?'🙋 TRUTH':'🔥 DARE')+'</b></div><div class="joke">'+esc(TD.text)+'</div>':'<div class="note" style="text-align:center;margin:0">Choose one.</div>')+'<div class="nav"><button class="ib p" id="td-truth">🙋 Truth</button><button class="ib p" id="td-dare">🔥 Dare</button></div>'+(TD.text?'<div class="nav"><button class="ib" id="td-skip">Skip, another '+TD.type+'</button></div>':'')+'</div>';
-  return h}
-function wireExtra(){var g=function(i){return $(i)};
-  if(g('ck-ok'))g('ck-ok').onclick=function(){lsS('qeb-cheeky',1);brRender()};
-  if(g('ck-no'))g('ck-no').onclick=function(){TD.lvl='chill';if(BK.tab==='cheeky')BK.tab='jokes';brSave();brRender()};
-  if(g('ck-rev'))g('ck-rev').onclick=function(){CK.show=true;brRender()};
-  $('brk').querySelectorAll('#td-lvl button').forEach(function(b){b.onclick=function(){TD.lvl=b.dataset.lvl;TD.text='';brRender()}});
-  if(g('td-truth'))g('td-truth').onclick=function(){todDraw('truth');brRender()};
-  if(g('td-dare'))g('td-dare').onclick=function(){todDraw('dare');brRender()};
-  if(g('td-skip'))g('td-skip').onclick=function(){todDraw(TD.type);brRender()}}
 function brRender(){
   var h='<div class="panel"><h3>Take a break</h3><div class="note" style="margin:0">Your brain files what you studied while you rest. Five minutes is enough.</div>'
    +'<div class="row" style="margin-top:8px"><div class="bkclock" id="bk-clock">'+(BK.end>Date.now()?fmt(BK.end-Date.now()):'')+'</div><span><select id="bk-min">'+[5,10,15].map(function(m){return '<option'+(m===BK.minutes?' selected':'')+'>'+m+'</option>'}).join('')+'</select> min <button class="mini" id="bk-go">'+(BK.end>Date.now()?'Stop':'Start timer')+'</button></span></div></div>'
-   +'<div class="tabs"><div class="seg" id="bk-tabs"><button data-v="jokes"'+(BK.tab==='jokes'?' class="on"':'')+'>😄 Jokes</button><button data-v="memes"'+(BK.tab==='memes'?' class="on"':'')+'>🖼 Memes</button><button data-v="facts"'+(BK.tab==='facts'?' class="on"':'')+'>💡 Facts</button><button data-v="calm"'+(BK.tab==='calm'?' class="on"':'')+'>🌿 Calm</button><button data-v="play"'+(BK.tab==='play'?' class="on"':'')+'>🧩 Play</button><button data-v="move"'+(BK.tab==='move'?' class="on"':'')+'>🧘 Move</button><button data-v="cheeky"'+(BK.tab==='cheeky'?' class="on"':'')+'>🌶 Cheeky</button><button data-v="tod"'+(BK.tab==='tod'?' class="on"':'')+'>🎲 Truth/Dare</button></div></div>';
+   +'<div class="tabs"><div class="seg" id="bk-tabs"><button data-v="jokes"'+(BK.tab==='jokes'?' class="on"':'')+'>😄 Jokes</button><button data-v="memes"'+(BK.tab==='memes'?' class="on"':'')+'>🖼 Memes</button><button data-v="facts"'+(BK.tab==='facts'?' class="on"':'')+'>💡 Facts</button><button data-v="calm"'+(BK.tab==='calm'?' class="on"':'')+'>🌿 Calm</button><button data-v="play"'+(BK.tab==='play'?' class="on"':'')+'>🧩 Play</button><button data-v="move"'+(BK.tab==='move'?' class="on"':'')+'>🧘 Move</button></div></div>';
   if(BK.tab==='jokes'){var j=JOKES[BK.JO[mod(BK.ji,BK.JO.length)]],hasP=!!j[1];
     h+='<div class="panel swipable"><div class="note" style="margin:0 0 6px;text-align:right">'+(mod(BK.ji,JOKES.length)+1)+' / '+JOKES.length+'</div><div class="joke">'+esc(j[0])+((BK.show||!hasP)&&hasP?'<div class="pu">'+esc(j[1])+'</div>':'')+'</div><div class="nav"><button class="ib" id="bk-prev">← Prev</button>'+(!hasP||BK.show?'':'<button class="ib p" id="bk-rev">Tell me</button>')+'<button class="ib" id="bk-next">Next →</button></div><div class="note" style="text-align:center;margin:8px 0 0">Swipe left or right. I remember where you stopped.</div></div>'}
   else if(BK.tab==='memes'){h+='<div class="panel swipable"><div class="note" style="margin:0 0 6px;text-align:right">'+(mod(BK.mi,MEMES.length)+1)+' / '+MEMES.length+'</div><canvas class="mcanvas" id="mcv"></canvas><div class="nav"><button class="ib" id="bk-prev">← Prev</button><button class="ib p" id="bk-share">Share</button><button class="ib" id="bk-next">Next →</button></div><div class="note" style="text-align:center;margin:8px 0 0">Swipe left or right. I remember where you stopped.</div></div>'}
   else if(BK.tab==='facts'){h+='<div class="panel swipable"><div class="joke">'+esc(FACTS[FACTI[mod(BK.fi,FACTI.length)]])+'</div><div class="nav"><button class="ib" id="bk-prev">← Prev</button><button class="ib" id="bk-next">Next →</button></div></div>'}
   else if(BK.tab==='play'){if(!MG)mgNew();h+='<div class="panel"><h3>Memory match</h3>'+mgRender()+'</div>'}
   else if(BK.tab==='move'){h+='<div class="panel"><h3>Stretch and rest your eyes</h3>'+STRETCH.map(function(x,i){return '<div class="stretch"><b>'+esc(x[0])+'</b><p>'+esc(x[1])+'</p><button class="mini" data-s="'+i+'">Start '+x[2]+'s</button></div>'}).join('')+'</div>'}
-  else if(BK.tab==='cheeky'){h+=cheekyHtml()}
-  else if(BK.tab==='tod'){h+=todHtml()}
   else{var q=CALM[BK.CO[mod(BK.ci,BK.CO.length)]];
     h+='<div class="panel"><div class="breath"><div class="orb" id="orb">'+(BK.breathing?'':'Breathe')+'</div></div><div class="nav"><button class="ib p" id="bk-breath">'+(BK.breathing?'Stop':'Start breathing')+'</button></div><div class="note" style="text-align:center">In for 4, hold for 2, out for 6.</div></div>'
      +'<div class="panel"><h3>Soft sounds</h3><div class="snds">'+[['rain','🌧 Rain'],['brown','🌫 Deep hum'],['ocean','🌊 Waves']].map(function(x){return '<button data-snd="'+x[0]+'"'+(BK.snd===x[0]?' class="on"':'')+'>'+x[1]+'</button>'}).join('')+'</div><div class="row"><span>Volume</span><input type="range" id="snd-vol" min="0.05" max="0.6" step="0.01" value="'+BK.vol+'" style="flex:1"></div>'+(BK.snd?'<div class="nav"><button class="ib" id="snd-stop">Stop sound</button></div>':'')+'<div class="note">Generated on your phone, so it works offline.</div></div>'
      +'<div class="quote resq swipable" style="cursor:default"><p>'+esc(q[0])+'</p>'+(q[1]?'<small>— <b>'+esc(q[1])+'</b></small>':'')+'</div><div class="nav"><button class="ib" id="bk-prev">← Prev</button><button class="ib" id="bk-next">Next →</button></div>'}
-  $('brk').innerHTML=h;wireExtra();
+  $('brk').innerHTML=h;
   $('bk-tabs').addEventListener('click',function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;stopBreath();BK.tab=v;BK.show=false;brSave();brRender()});
   $('bk-min').addEventListener('change',function(){BK.minutes=parseInt(this.value,10)});
   $('bk-go').addEventListener('click',function(){if(BK.end>Date.now()){BK.end=0;clearInterval(BK.tm);brRender();return}BK.end=Date.now()+BK.minutes*6e4;clearInterval(BK.tm);BK.tm=setInterval(bkTick,1000);brRender()});
